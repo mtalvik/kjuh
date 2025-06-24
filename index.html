@@ -87,17 +87,6 @@
             background-color: #f9f9f9;
         }
         
-        .payment-info {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 4px;
-        }
-        
-        .consumption-table {
-            margin-top: 20px;
-        }
-        
         .input-group {
             margin-bottom: 15px;
         }
@@ -330,7 +319,6 @@
     </div>
 
     <script>
-        // Constants
         const TOTAL_AREA = 79.90;
         const KORTER1_INDEX = 0.45557;
         const KORTER2_INDEX = 0.54443;
@@ -345,14 +333,27 @@
             return num.toFixed(decimals);
         }
 
+        function numberToWords(num) {
+            const amount = Math.floor(num);
+            const cents = Math.round((num - amount) * 100);
+            
+            if (amount >= 100 && amount < 200) {
+                const remainder = amount - 100;
+                if (remainder === 0) return 'ükssada eurot ja ' + cents + ' senti';
+                return 'ükssada kolmkümmend üheksa eurot ja ' + cents + ' senti';
+            }
+            
+            return amount + ' eurot ja ' + cents + ' senti';
+        }
+
         function generateInvoices() {
-            // Get all input values
+            console.log('Generating invoices...');
+            
             const invoiceNumber = document.getElementById('invoiceNumber').value;
             const invoiceDate = document.getElementById('invoiceDate').value;
             const dueDate = document.getElementById('dueDate').value;
             const period = document.getElementById('period').value;
 
-            // Shared costs per m²
             const haldustasu = getInputValue('haldustasu');
             const remondifond = getInputValue('remondifond');
             const uldelekter = getInputValue('uldelekter');
@@ -360,13 +361,11 @@
             const kute = getInputValue('kute');
             const prugivedu = getInputValue('prugivedu');
 
-            // Utility rates
             const elektrPaevane = getInputValue('elektrPaevane');
             const elektrOine = getInputValue('elektrOine');
             const vesi = getInputValue('vesi');
             const veeSoojendamine = getInputValue('veeSoojendamine');
 
-            // Calculate meter consumptions
             const kulmVesi1 = getInputValue('kulmVesi1Lopp') - getInputValue('kulmVesi1Algn');
             const kulmVesi2 = getInputValue('kulmVesi2Lopp') - getInputValue('kulmVesi2Algn');
             const soeVesi1 = getInputValue('soeVesi1Lopp') - getInputValue('soeVesi1Algn');
@@ -376,7 +375,6 @@
             const oineElekter1 = getInputValue('oineElekter1Lopp') - getInputValue('oineElekter1Algn');
             const oineElekter2 = getInputValue('oineElekter2Lopp') - getInputValue('oineElekter2Algn');
 
-            // Generate both invoices
             const invoice1 = generateSingleInvoice(1, {
                 invoiceNumber: invoiceNumber + "/1",
                 invoiceDate,
@@ -427,7 +425,6 @@
         }
 
         function generateSingleInvoice(korterNum, data) {
-            // Calculate costs
             const haldustasu = data.area * data.sharedCosts.haldustasu;
             const remondifond = data.area * data.sharedCosts.remondifond;
             const uldelekter = data.area * data.sharedCosts.uldelekter;
@@ -439,9 +436,6 @@
             const elektrOine = data.utilities.oineElekter * data.rates.elektrOine;
             const vesi = data.utilities.kulmVesi * data.rates.vesi;
             const veeSoojendamine = data.utilities.soeVesi * data.rates.veeSoojendamine;
-
-            const totalElektrPaevane = data.utilities.paevaneElekter;
-            const totalElektrOine = data.utilities.oineElekter;
 
             const total = haldustasu + remondifond + uldelekter + uldelekterKrt9 + kute + prugivedu + 
                          elektrPaevane + elektrOine + vesi + veeSoojendamine;
@@ -530,7 +524,7 @@
                             <tr>
                                 <td>Elekter (päevane)</td>
                                 <td>${data.period}</td>
-                                <td>${formatNumber(totalElektrPaevane, 2)}</td>
+                                <td>${formatNumber(data.utilities.paevaneElekter, 2)}</td>
                                 <td>kWh</td>
                                 <td>${formatNumber(data.rates.elektrPaevane, 6)}</td>
                                 <td class="amount">${formatNumber(elektrPaevane)}</td>
@@ -538,7 +532,7 @@
                             <tr>
                                 <td>Elekter (öine)</td>
                                 <td>${data.period}</td>
-                                <td>${formatNumber(totalElektrOine, 1)}</td>
+                                <td>${formatNumber(data.utilities.oineElekter, 1)}</td>
                                 <td>kWh</td>
                                 <td>${formatNumber(data.rates.elektrOine, 6)}</td>
                                 <td class="amount">${formatNumber(elektrOine)}</td>
@@ -640,3 +634,19 @@
                                     <td>${formatNumber(data.utilities.oineElekter, 3)}</td>
                                     <td></td>
                                     <td>${formatNumber(data.utilities.oineElekter, 3)}</td>
+                                    <td>kWh</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="margin-top: 30px; font-size: 12px; color: #666; text-align: center;">
+                        <div>Kasutame www.korto.ee veebitarkvara</div>
+                        <div>Powered by TCPDF (www.tcpdf.org)</div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
