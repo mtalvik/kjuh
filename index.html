@@ -12,7 +12,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         
@@ -24,58 +24,61 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
-        .invoices-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
         .invoice {
             background: white;
-            padding: 20px;
+            padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            min-width: 500px;
-            flex: 1;
         }
         
         .invoice-header {
+            text-align: center;
             border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .invoice-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
         }
         
         .company-info {
             font-weight: bold;
-            margin-bottom: 20px;
-        }
-        
-        .client-info {
-            margin-bottom: 20px;
         }
         
         .invoice-details {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
+            text-align: right;
+        }
+        
+        .apartment-info {
+            margin-bottom: 25px;
+            text-align: center;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
         }
         
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .invoice-table th,
         .invoice-table td {
-            border: 1px solid #ccc;
+            border: 1px solid #333;
             padding: 8px;
             text-align: left;
+            font-size: 12px;
         }
         
         .invoice-table th {
-            background-color: #f0f0f0;
+            background-color: #e0e0e0;
             font-weight: bold;
+            text-align: center;
         }
         
         .amount {
@@ -84,16 +87,18 @@
         
         .total-row {
             font-weight: bold;
-            background-color: #f9f9f9;
+            background-color: #f0f0f0;
         }
         
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 10px;
+            align-items: center;
         }
         
         .input-group label {
-            display: inline-block;
-            width: 200px;
             font-weight: bold;
         }
         
@@ -106,65 +111,81 @@
         .calculate-btn {
             background-color: #007bff;
             color: white;
-            padding: 10px 20px;
+            padding: 15px 30px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: bold;
         }
         
         .calculate-btn:hover {
             background-color: #0056b3;
         }
         
-        .meter-readings {
+        .rates-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
         
-        .meter-group {
+        .meters-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .meter-section {
             border: 1px solid #ddd;
-            padding: 15px;
+            padding: 10px;
             border-radius: 4px;
         }
         
-        .meter-group h4 {
-            margin-top: 0;
+        .meter-section h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
             color: #333;
+        }
+        
+        .korter1-col {
+            background-color: #f9f9f9;
+        }
+        
+        .korter2-col {
+            background-color: #f9f9f9;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Majaka tn 54 Invoice Splitter System</h1>
+        <h1>Majaka tn 54 Invoice Splitter</h1>
         
         <div class="input-section">
-            <h2>Monthly Invoice Data</h2>
+            <h2>Invoice Input</h2>
             
-            <div class="input-group">
-                <label>Invoice Number:</label>
-                <input type="text" id="invoiceNumber" value="25069">
-            </div>
-            
-            <div class="input-group">
-                <label>Invoice Date:</label>
-                <input type="date" id="invoiceDate" value="2025-05-31">
-            </div>
-            
-            <div class="input-group">
-                <label>Due Date:</label>
-                <input type="date" id="dueDate" value="2025-06-30">
-            </div>
-            
-            <div class="input-group">
-                <label>Period (MM/YYYY):</label>
-                <input type="text" id="period" value="05/2025" placeholder="05/2025">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px;">
+                <div class="input-group">
+                    <label>Invoice Number:</label>
+                    <input type="text" id="invoiceNumber" value="25069">
+                </div>
+                <div class="input-group">
+                    <label>Period:</label>
+                    <input type="text" id="period" value="05/2025">
+                </div>
+                <div class="input-group">
+                    <label>Invoice Date:</label>
+                    <input type="date" id="invoiceDate" value="2025-05-31">
+                </div>
+                <div class="input-group">
+                    <label>Due Date:</label>
+                    <input type="date" id="dueDate" value="2025-06-30">
+                </div>
             </div>
             
             <h3>Shared Costs (per m²)</h3>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+            <div class="rates-grid">
                 <div class="input-group">
                     <label>Haldustasu:</label>
                     <input type="number" id="haldustasu" value="0.3689" step="0.0001">
@@ -192,7 +213,7 @@
             </div>
             
             <h3>Utility Rates</h3>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+            <div class="rates-grid">
                 <div class="input-group">
                     <label>Elekter (päevane):</label>
                     <input type="number" id="elektrPaevane" value="0.151487" step="0.000001">
@@ -212,109 +233,109 @@
             </div>
             
             <h3>Meter Readings</h3>
-            <div class="meter-readings">
-                <div class="meter-group">
-                    <h4>Külm vesi (1) - Korter 1</h4>
+            <div class="meters-grid">
+                <div class="meter-section">
+                    <h4>Külm vesi 1 (K1)</h4>
                     <div class="input-group">
-                        <label>Algnäit:</label>
+                        <label>Algn:</label>
                         <input type="number" id="kulmVesi1Algn" value="172.230" step="0.001">
                     </div>
                     <div class="input-group">
-                        <label>Lõppnäit:</label>
+                        <label>Lõpp:</label>
                         <input type="number" id="kulmVesi1Lopp" value="174.240" step="0.001">
                     </div>
                 </div>
                 
-                <div class="meter-group">
-                    <h4>Külm vesi (2) - Korter 2</h4>
+                <div class="meter-section">
+                    <h4>Külm vesi 2 (K2)</h4>
                     <div class="input-group">
-                        <label>Algnäit:</label>
+                        <label>Algn:</label>
                         <input type="number" id="kulmVesi2Algn" value="165.600" step="0.001">
                     </div>
                     <div class="input-group">
-                        <label>Lõppnäit:</label>
+                        <label>Lõpp:</label>
                         <input type="number" id="kulmVesi2Lopp" value="165.980" step="0.001">
                     </div>
                 </div>
                 
-                <div class="meter-group">
-                    <h4>Soe vesi (1) - Korter 1</h4>
+                <div class="meter-section">
+                    <h4>Soe vesi 1 (K1)</h4>
                     <div class="input-group">
-                        <label>Algnäit:</label>
+                        <label>Algn:</label>
                         <input type="number" id="soeVesi1Algn" value="120.430" step="0.001">
                     </div>
                     <div class="input-group">
-                        <label>Lõppnäit:</label>
+                        <label>Lõpp:</label>
                         <input type="number" id="soeVesi1Lopp" value="122.830" step="0.001">
                     </div>
                 </div>
                 
-                <div class="meter-group">
-                    <h4>Soe vesi (2) - Korter 2</h4>
+                <div class="meter-section">
+                    <h4>Soe vesi 2 (K2)</h4>
                     <div class="input-group">
-                        <label>Algnäit:</label>
+                        <label>Algn:</label>
                         <input type="number" id="soeVesi2Algn" value="20.010" step="0.001">
                     </div>
                     <div class="input-group">
-                        <label>Lõppnäit:</label>
+                        <label>Lõpp:</label>
                         <input type="number" id="soeVesi2Lopp" value="20.160" step="0.001">
                     </div>
                 </div>
                 
-                <div class="meter-group">
-                    <h4>Päevane elekter (1) - Korter 1</h4>
+                <div class="meter-section">
+                    <h4>Päev elekter 1 (K1)</h4>
                     <div class="input-group">
-                        <label>Algnäit:</label>
+                        <label>Algn:</label>
                         <input type="number" id="paevaneElekter1Algn" value="2920.650" step="0.001">
                     </div>
                     <div class="input-group">
-                        <label>Lõppnäit:</label>
+                        <label>Lõpp:</label>
                         <input type="number" id="paevaneElekter1Lopp" value="2969.710" step="0.001">
                     </div>
                 </div>
                 
-                <div class="meter-group">
-                    <h4>Päevane elekter (2) - Korter 2</h4>
+                <div class="meter-section">
+                    <h4>Päev elekter 2 (K2)</h4>
                     <div class="input-group">
-                        <label>Algnäit:</label>
+                        <label>Algn:</label>
                         <input type="number" id="paevaneElekter2Algn" value="3866.190" step="0.001">
                     </div>
                     <div class="input-group">
-                        <label>Lõppnäit:</label>
+                        <label>Lõpp:</label>
                         <input type="number" id="paevaneElekter2Lopp" value="3884.910" step="0.001">
                     </div>
                 </div>
                 
-                <div class="meter-group">
-                    <h4>Öine elekter (1) - Korter 1</h4>
+                <div class="meter-section">
+                    <h4>Öö elekter 1 (K1)</h4>
                     <div class="input-group">
-                        <label>Algnäit:</label>
+                        <label>Algn:</label>
                         <input type="number" id="oineElekter1Algn" value="2670.590" step="0.001">
                     </div>
                     <div class="input-group">
-                        <label>Lõppnäit:</label>
+                        <label>Lõpp:</label>
                         <input type="number" id="oineElekter1Lopp" value="2731.950" step="0.001">
                     </div>
                 </div>
                 
-                <div class="meter-group">
-                    <h4>Öine elekter (2) - Korter 2</h4>
+                <div class="meter-section">
+                    <h4>Öö elekter 2 (K2)</h4>
                     <div class="input-group">
-                        <label>Algnäit:</label>
+                        <label>Algn:</label>
                         <input type="number" id="oineElekter2Algn" value="3231.600" step="0.001">
                     </div>
                     <div class="input-group">
-                        <label>Lõppnäit:</label>
+                        <label>Lõpp:</label>
                         <input type="number" id="oineElekter2Lopp" value="3246.740" step="0.001">
                     </div>
                 </div>
             </div>
             
-            <button class="calculate-btn" onclick="generateInvoices()">Generate Split Invoices</button>
+            <button class="calculate-btn" onclick="generateInvoice()">Generate Split Invoice</button>
         </div>
         
-        <div class="invoices-container" id="invoicesContainer">
-            <!-- Generated invoices will appear here -->
+        <div id="invoiceContainer">
+            <!-- Generated invoice will appear here -->
         </div>
     </div>
 
@@ -333,39 +354,27 @@
             return num.toFixed(decimals);
         }
 
-        function numberToWords(num) {
-            const amount = Math.floor(num);
-            const cents = Math.round((num - amount) * 100);
-            
-            if (amount >= 100 && amount < 200) {
-                const remainder = amount - 100;
-                if (remainder === 0) return 'ükssada eurot ja ' + cents + ' senti';
-                return 'ükssada kolmkümmend üheksa eurot ja ' + cents + ' senti';
-            }
-            
-            return amount + ' eurot ja ' + cents + ' senti';
-        }
-
-        function generateInvoices() {
-            console.log('Generating invoices...');
+        function generateInvoice() {
+            console.log('Generating split invoice...');
             
             const invoiceNumber = document.getElementById('invoiceNumber').value;
             const invoiceDate = document.getElementById('invoiceDate').value;
             const dueDate = document.getElementById('dueDate').value;
             const period = document.getElementById('period').value;
 
+            // Get rates
             const haldustasu = getInputValue('haldustasu');
             const remondifond = getInputValue('remondifond');
             const uldelekter = getInputValue('uldelekter');
             const uldelekterKrt9 = getInputValue('uldelekterKrt9');
             const kute = getInputValue('kute');
             const prugivedu = getInputValue('prugivedu');
-
             const elektrPaevane = getInputValue('elektrPaevane');
             const elektrOine = getInputValue('elektrOine');
             const vesi = getInputValue('vesi');
             const veeSoojendamine = getInputValue('veeSoojendamine');
 
+            // Calculate consumptions
             const kulmVesi1 = getInputValue('kulmVesi1Lopp') - getInputValue('kulmVesi1Algn');
             const kulmVesi2 = getInputValue('kulmVesi2Lopp') - getInputValue('kulmVesi2Algn');
             const soeVesi1 = getInputValue('soeVesi1Lopp') - getInputValue('soeVesi1Algn');
@@ -375,106 +384,63 @@
             const oineElekter1 = getInputValue('oineElekter1Lopp') - getInputValue('oineElekter1Algn');
             const oineElekter2 = getInputValue('oineElekter2Lopp') - getInputValue('oineElekter2Algn');
 
-            const invoice1 = generateSingleInvoice(1, {
-                invoiceNumber: invoiceNumber + "/1",
-                invoiceDate,
-                dueDate,
-                period,
-                area: KORTER1_AREA,
-                index: KORTER1_INDEX,
-                sharedCosts: { haldustasu, remondifond, uldelekter, uldelekterKrt9, kute, prugivedu },
-                utilities: {
-                    kulmVesi: kulmVesi1,
-                    soeVesi: soeVesi1,
-                    paevaneElekter: paevaneElekter1,
-                    oineElekter: oineElekter1
-                },
-                rates: { elektrPaevane, elektrOine, vesi, veeSoojendamine },
-                meterReadings: {
-                    kulmVesi: { algn: getInputValue('kulmVesi1Algn'), lopp: getInputValue('kulmVesi1Lopp') },
-                    soeVesi: { algn: getInputValue('soeVesi1Algn'), lopp: getInputValue('soeVesi1Lopp') },
-                    paevaneElekter: { algn: getInputValue('paevaneElekter1Algn'), lopp: getInputValue('paevaneElekter1Lopp') },
-                    oineElekter: { algn: getInputValue('oineElekter1Algn'), lopp: getInputValue('oineElekter1Lopp') }
-                }
-            });
+            // Calculate costs for Korter 1
+            const k1_haldustasu = KORTER1_AREA * haldustasu;
+            const k1_remondifond = KORTER1_AREA * remondifond;
+            const k1_uldelekter = KORTER1_AREA * uldelekter;
+            const k1_uldelekterKrt9 = KORTER1_AREA * uldelekterKrt9;
+            const k1_kute = KORTER1_AREA * kute;
+            const k1_prugivedu = KORTER1_AREA * prugivedu;
+            const k1_elektrPaevane = paevaneElekter1 * elektrPaevane;
+            const k1_elektrOine = oineElekter1 * elektrOine;
+            const k1_vesi = kulmVesi1 * vesi;
+            const k1_veeSoojendamine = soeVesi1 * veeSoojendamine;
 
-            const invoice2 = generateSingleInvoice(2, {
-                invoiceNumber: invoiceNumber + "/2",
-                invoiceDate,
-                dueDate,
-                period,
-                area: KORTER2_AREA,
-                index: KORTER2_INDEX,
-                sharedCosts: { haldustasu, remondifond, uldelekter, uldelekterKrt9, kute, prugivedu },
-                utilities: {
-                    kulmVesi: kulmVesi2,
-                    soeVesi: soeVesi2,
-                    paevaneElekter: paevaneElekter2,
-                    oineElekter: oineElekter2
-                },
-                rates: { elektrPaevane, elektrOine, vesi, veeSoojendamine },
-                meterReadings: {
-                    kulmVesi: { algn: getInputValue('kulmVesi2Algn'), lopp: getInputValue('kulmVesi2Lopp') },
-                    soeVesi: { algn: getInputValue('soeVesi2Algn'), lopp: getInputValue('soeVesi2Lopp') },
-                    paevaneElekter: { algn: getInputValue('paevaneElekter2Algn'), lopp: getInputValue('paevaneElekter2Lopp') },
-                    oineElekter: { algn: getInputValue('oineElekter2Algn'), lopp: getInputValue('oineElekter2Lopp') }
-                }
-            });
+            // Calculate costs for Korter 2
+            const k2_haldustasu = KORTER2_AREA * haldustasu;
+            const k2_remondifond = KORTER2_AREA * remondifond;
+            const k2_uldelekter = KORTER2_AREA * uldelekter;
+            const k2_uldelekterKrt9 = KORTER2_AREA * uldelekterKrt9;
+            const k2_kute = KORTER2_AREA * kute;
+            const k2_prugivedu = KORTER2_AREA * prugivedu;
+            const k2_elektrPaevane = paevaneElekter2 * elektrPaevane;
+            const k2_elektrOine = oineElekter2 * elektrOine;
+            const k2_vesi = kulmVesi2 * vesi;
+            const k2_veeSoojendamine = soeVesi2 * veeSoojendamine;
 
-            document.getElementById('invoicesContainer').innerHTML = invoice1 + invoice2;
-        }
+            // Calculate totals
+            const total1 = k1_haldustasu + k1_remondifond + k1_uldelekter + k1_uldelekterKrt9 + k1_kute + k1_prugivedu + k1_elektrPaevane + k1_elektrOine + k1_vesi + k1_veeSoojendamine;
+            const total2 = k2_haldustasu + k2_remondifond + k2_uldelekter + k2_uldelekterKrt9 + k2_kute + k2_prugivedu + k2_elektrPaevane + k2_elektrOine + k2_vesi + k2_veeSoojendamine;
+            const grandTotal = total1 + total2;
 
-        function generateSingleInvoice(korterNum, data) {
-            const haldustasu = data.area * data.sharedCosts.haldustasu;
-            const remondifond = data.area * data.sharedCosts.remondifond;
-            const uldelekter = data.area * data.sharedCosts.uldelekter;
-            const uldelekterKrt9 = data.area * data.sharedCosts.uldelekterKrt9;
-            const kute = data.area * data.sharedCosts.kute;
-            const prugivedu = data.area * data.sharedCosts.prugivedu;
-
-            const elektrPaevane = data.utilities.paevaneElekter * data.rates.elektrPaevane;
-            const elektrOine = data.utilities.oineElekter * data.rates.elektrOine;
-            const vesi = data.utilities.kulmVesi * data.rates.vesi;
-            const veeSoojendamine = data.utilities.soeVesi * data.rates.veeSoojendamine;
-
-            const total = haldustasu + remondifond + uldelekter + uldelekterKrt9 + kute + prugivedu + 
-                         elektrPaevane + elektrOine + vesi + veeSoojendamine;
-
-            return `
+            const invoice = `
                 <div class="invoice">
                     <div class="invoice-header">
-                        <h2>MAJAKA TN 54 KÜ</h2>
+                        <h1>MAJAKA TN 54 KÜ</h1>
+                        <p>Majaka tn 54, 11412 Tallinn, Reg. nr 80541496</p>
                     </div>
                     
-                    <div class="company-info">
-                        Majaka tn 54<br>
-                        11412 Tallinn<br>
-                        Reg. nr 80541496
-                    </div>
-                    
-                    <div class="client-info">
-                        <strong>MARIA TALVIK</strong><br>
-                        Majaka tn 54-${korterNum}<br>
-                        11412 Tallinn
-                    </div>
-                    
-                    <div class="invoice-details">
-                        <div>
-                            <strong>ARVE nr ${data.invoiceNumber}</strong><br>
-                            Kuupäev ${data.invoiceDate}<br>
-                            Maksetähtaeg ${data.dueDate}<br>
-                            Viivis 0.022% päevas<br>
-                            Viitenumber 97
+                    <div class="invoice-info">
+                        <div class="company-info">
+                            <strong>MARIA TALVIK</strong><br>
+                            Majaka tn 54-9<br>
+                            11412 Tallinn
                         </div>
-                        <div>
+                        <div class="invoice-details">
+                            <strong>ARVE nr ${invoiceNumber}</strong><br>
+                            Kuupäev ${invoiceDate}<br>
+                            Maksetähtaeg ${dueDate}<br>
+                            Viivis 0.022% päevas<br>
+                            Viitenumber 97<br>
                             SWEDBANK EE772200221071147195
                         </div>
                     </div>
                     
-                    <div style="margin-bottom: 20px;">
-                        <strong>Korter Majaka tn 54-${korterNum}</strong><br>
-                        Pind ${formatNumber(data.area)} m²<br>
-                        Köetav pind ${formatNumber(data.area)} m²
+                    <div class="apartment-info">
+                        <strong>Korter Majaka tn 54-9</strong><br>
+                        Kogupind ${formatNumber(TOTAL_AREA)} m² | 
+                        Korter 1: ${formatNumber(KORTER1_AREA)} m² (${formatNumber(KORTER1_INDEX * 100, 1)}%) | 
+                        Korter 2: ${formatNumber(KORTER2_AREA)} m² (${formatNumber(KORTER2_INDEX * 100, 1)}%)
                     </div>
                     
                     <table class="invoice-table">
@@ -486,158 +452,136 @@
                                 <th>Ühik</th>
                                 <th>Hind</th>
                                 <th>Summa</th>
+                                <th>Korter 1</th>
+                                <th>Korter 2</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Haldustasu</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.area, 1)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
                                 <td>m²</td>
-                                <td>${formatNumber(data.sharedCosts.haldustasu, 4)}</td>
-                                <td class="amount">${formatNumber(haldustasu)}</td>
+                                <td>${formatNumber(haldustasu, 4)}</td>
+                                <td class="amount">${formatNumber(k1_haldustasu + k2_haldustasu)}</td>
+                                <td class="amount">${formatNumber(k1_haldustasu)}</td>
+                                <td class="amount">${formatNumber(k2_haldustasu)}</td>
                             </tr>
                             <tr>
                                 <td>Remondifond</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.area, 1)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
                                 <td>m²</td>
-                                <td>${formatNumber(data.sharedCosts.remondifond, 4)}</td>
-                                <td class="amount">${formatNumber(remondifond)}</td>
+                                <td>${formatNumber(remondifond, 4)}</td>
+                                <td class="amount">${formatNumber(k1_remondifond + k2_remondifond)}</td>
+                                <td class="amount">${formatNumber(k1_remondifond)}</td>
+                                <td class="amount">${formatNumber(k2_remondifond)}</td>
                             </tr>
                             <tr>
                                 <td>Üldelekter</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.area, 1)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
                                 <td>m²</td>
-                                <td>${formatNumber(data.sharedCosts.uldelekter, 5)}</td>
-                                <td class="amount">${formatNumber(uldelekter)}</td>
+                                <td>${formatNumber(uldelekter, 5)}</td>
+                                <td class="amount">${formatNumber(k1_uldelekter + k2_uldelekter)}</td>
+                                <td class="amount">${formatNumber(k1_uldelekter)}</td>
+                                <td class="amount">${formatNumber(k2_uldelekter)}</td>
                             </tr>
                             <tr>
                                 <td>Üldelekter (krt 9)</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.area, 1)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
                                 <td>m²</td>
-                                <td>${formatNumber(data.sharedCosts.uldelekterKrt9, 5)}</td>
-                                <td class="amount">${formatNumber(uldelekterKrt9)}</td>
+                                <td>${formatNumber(uldelekterKrt9, 5)}</td>
+                                <td class="amount">${formatNumber(k1_uldelekterKrt9 + k2_uldelekterKrt9)}</td>
+                                <td class="amount">${formatNumber(k1_uldelekterKrt9)}</td>
+                                <td class="amount">${formatNumber(k2_uldelekterKrt9)}</td>
                             </tr>
                             <tr>
                                 <td>Elekter (päevane)</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.utilities.paevaneElekter, 2)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(paevaneElekter1 + paevaneElekter2, 2)}</td>
                                 <td>kWh</td>
-                                <td>${formatNumber(data.rates.elektrPaevane, 6)}</td>
-                                <td class="amount">${formatNumber(elektrPaevane)}</td>
+                                <td>${formatNumber(elektrPaevane, 6)}</td>
+                                <td class="amount">${formatNumber(k1_elektrPaevane + k2_elektrPaevane)}</td>
+                                <td class="amount">${formatNumber(k1_elektrPaevane)}</td>
+                                <td class="amount">${formatNumber(k2_elektrPaevane)}</td>
                             </tr>
                             <tr>
                                 <td>Elekter (öine)</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.utilities.oineElekter, 1)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(oineElekter1 + oineElekter2, 1)}</td>
                                 <td>kWh</td>
-                                <td>${formatNumber(data.rates.elektrOine, 6)}</td>
-                                <td class="amount">${formatNumber(elektrOine)}</td>
+                                <td>${formatNumber(elektrOine, 6)}</td>
+                                <td class="amount">${formatNumber(k1_elektrOine + k2_elektrOine)}</td>
+                                <td class="amount">${formatNumber(k1_elektrOine)}</td>
+                                <td class="amount">${formatNumber(k2_elektrOine)}</td>
                             </tr>
                             <tr>
                                 <td>Vesi</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.utilities.kulmVesi, 2)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(kulmVesi1 + kulmVesi2, 2)}</td>
                                 <td>m³</td>
-                                <td>${formatNumber(data.rates.vesi, 4)}</td>
-                                <td class="amount">${formatNumber(vesi)}</td>
+                                <td>${formatNumber(vesi, 4)}</td>
+                                <td class="amount">${formatNumber(k1_vesi + k2_vesi)}</td>
+                                <td class="amount">${formatNumber(k1_vesi)}</td>
+                                <td class="amount">${formatNumber(k2_vesi)}</td>
                             </tr>
                             <tr>
                                 <td>Küte</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.area, 1)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
                                 <td>m²</td>
-                                <td>${formatNumber(data.sharedCosts.kute, 5)}</td>
-                                <td class="amount">${formatNumber(kute)}</td>
+                                <td>${formatNumber(kute, 5)}</td>
+                                <td class="amount">${formatNumber(k1_kute + k2_kute)}</td>
+                                <td class="amount">${formatNumber(k1_kute)}</td>
+                                <td class="amount">${formatNumber(k2_kute)}</td>
                             </tr>
                             <tr>
                                 <td>Vee soojendamine</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.utilities.soeVesi, 2)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(soeVesi1 + soeVesi2, 2)}</td>
                                 <td>m³</td>
-                                <td>${formatNumber(data.rates.veeSoojendamine, 6)}</td>
-                                <td class="amount">${formatNumber(veeSoojendamine)}</td>
+                                <td>${formatNumber(veeSoojendamine, 6)}</td>
+                                <td class="amount">${formatNumber(k1_veeSoojendamine + k2_veeSoojendamine)}</td>
+                                <td class="amount">${formatNumber(k1_veeSoojendamine)}</td>
+                                <td class="amount">${formatNumber(k2_veeSoojendamine)}</td>
                             </tr>
                             <tr>
                                 <td>Prügivedu</td>
-                                <td>${data.period}</td>
-                                <td>${formatNumber(data.area, 1)}</td>
+                                <td>${period}</td>
+                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
                                 <td>m²</td>
-                                <td>${formatNumber(data.sharedCosts.prugivedu, 5)}</td>
-                                <td class="amount">${formatNumber(prugivedu)}</td>
+                                <td>${formatNumber(prugivedu, 5)}</td>
+                                <td class="amount">${formatNumber(k1_prugivedu + k2_prugivedu)}</td>
+                                <td class="amount">${formatNumber(k1_prugivedu)}</td>
+                                <td class="amount">${formatNumber(k2_prugivedu)}</td>
                             </tr>
                             <tr class="total-row">
                                 <td colspan="5"><strong>Kokku (EUR)</strong></td>
-                                <td class="amount"><strong>${formatNumber(total)}</strong></td>
+                                <td class="amount"><strong>${formatNumber(grandTotal)}</strong></td>
+                                <td class="amount"><strong>${formatNumber(total1)}</strong></td>
+                                <td class="amount"><strong>${formatNumber(total2)}</strong></td>
                             </tr>
                         </tbody>
                     </table>
                     
-                    <div style="margin: 20px 0;">
-                        <div>Võlg (seisuga ${data.invoiceDate}): 0.00</div>
-                        <div>Arvestatud viivised (01.-31.${data.period.split('/')[0]}.${data.period.split('/')[1]}): 0.05</div>
-                        <div><strong>Tasumisele kuulub (EUR): ${formatNumber(total + 0.05)}</strong></div>
-                        <div style="margin-top: 10px;"><strong>Summa sõnadega:</strong> ${numberToWords(total + 0.05)}</div>
-                        <div>Eelmisel kuul laekunud summa: ${formatNumber(total * 2.7)}</div>
-                        <div style="margin-top: 10px;"><strong>Palume kindlasti märkida tasumisel viitenumber!</strong></div>
-                    </div>
-                    
-                    <div class="consumption-table">
-                        <h3>TARBIMISTE ÜLEVAADE</h3>
-                        <table class="invoice-table">
-                            <thead>
-                                <tr>
-                                    <th>Arvesti</th>
-                                    <th>Algnäit</th>
-                                    <th>Lõppnäit</th>
-                                    <th>Kogus</th>
-                                    <th>Koef.</th>
-                                    <th>Korr. kogus</th>
-                                    <th>Ühik</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Majaka tn 54-${korterNum} Külm vesi (${korterNum})</td>
-                                    <td>${formatNumber(data.meterReadings.kulmVesi.algn, 3)}</td>
-                                    <td>${formatNumber(data.meterReadings.kulmVesi.lopp, 3)}</td>
-                                    <td>${formatNumber(data.utilities.kulmVesi, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(data.utilities.kulmVesi, 3)}</td>
-                                    <td>m³</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-${korterNum} Soe vesi (${korterNum})</td>
-                                    <td>${formatNumber(data.meterReadings.soeVesi.algn, 3)}</td>
-                                    <td>${formatNumber(data.meterReadings.soeVesi.lopp, 3)}</td>
-                                    <td>${formatNumber(data.utilities.soeVesi, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(data.utilities.soeVesi, 3)}</td>
-                                    <td>m³</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-${korterNum} Päevane elekter (${korterNum})</td>
-                                    <td>${formatNumber(data.meterReadings.paevaneElekter.algn, 3)}</td>
-                                    <td>${formatNumber(data.meterReadings.paevaneElekter.lopp, 3)}</td>
-                                    <td>${formatNumber(data.utilities.paevaneElekter, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(data.utilities.paevaneElekter, 3)}</td>
-                                    <td>kWh</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-${korterNum} Öine elekter (${korterNum})</td>
-                                    <td>${formatNumber(data.meterReadings.oineElekter.algn, 3)}</td>
-                                    <td>${formatNumber(data.meterReadings.oineElekter.lopp, 3)}</td>
-                                    <td>${formatNumber(data.utilities.oineElekter, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(data.utilities.oineElekter, 3)}</td>
-                                    <td>kWh</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div style="margin: 25px 0;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                            <div>
+                                <div>Võlg (seisuga ${invoiceDate}): 0.00</div>
+                                <div>Arvestatud viivised: 0.05</div>
+                                <div><strong>Tasumisele kuulub (EUR): ${formatNumber(grandTotal + 0.05)}</strong></div>
+                            </div>
+                            <div style="text-align: center;">
+                                <h4 style="margin: 0 0 10px 0;">KORTER 1</h4>
+                                <div><strong>${formatNumber(total1)} EUR</strong></div>
+                            </div>
+                            <div style="text-align: center;">
+                                <h4 style="margin: 0 0 10px 0;">KORTER 2</h4>
+                                <div><strong>${formatNumber(total2)} EUR</strong></div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div style="margin-top: 30px; font-size: 12px; color: #666; text-align: center;">
@@ -646,6 +590,8 @@
                     </div>
                 </div>
             `;
+
+            document.getElementById('invoiceContainer').innerHTML = invoice;
         }
     </script>
 </body>
