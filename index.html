@@ -445,6 +445,7 @@
             </div>
             
             <button class="calculate-btn" onclick="generateInvoice()">Generate Split Invoice</button>
+        <button onclick="printInvoice()" class="print-btn" style="margin-left: 10px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Print Invoice</button>
         </div>
         
         <div id="invoiceContainer">
@@ -824,6 +825,153 @@
             `;
 
             document.getElementById('invoiceContainer').innerHTML = invoice;
+        }
+
+        function printInvoice() {
+            // Create a new window for printing
+            const printWindow = window.open('', '_blank');
+            
+            // Get the generated invoice HTML
+            const invoiceContainer = document.getElementById('invoice-container');
+            if (!invoiceContainer || !invoiceContainer.innerHTML.trim()) {
+                alert('Please generate an invoice first!');
+                return;
+            }
+            
+            // Create the print HTML
+            const printHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Invoice - Majaka tn 54</title>
+                    <style>
+                        @media print {
+                            @page {
+                                margin: 1cm;
+                                size: A4;
+                            }
+                        }
+                        
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 20px;
+                            font-size: 12px;
+                            line-height: 1.4;
+                        }
+                        
+                        .invoice {
+                            max-width: 100%;
+                            margin: 0 auto;
+                        }
+                        
+                        .invoice-header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-start;
+                            margin-bottom: 30px;
+                        }
+                        
+                        .sender-info h3, .recipient-info h4 {
+                            margin: 0 0 10px 0;
+                            font-size: 16px;
+                        }
+                        
+                        .sender-info p, .recipient-info p {
+                            margin: 5px 0;
+                            font-size: 12px;
+                        }
+                        
+                        .invoice-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 20px;
+                            font-size: 11px;
+                        }
+                        
+                        .invoice-table th, .invoice-table td {
+                            border: 1px solid #000;
+                            padding: 4px 6px;
+                            text-align: left;
+                        }
+                        
+                        .invoice-table th {
+                            background-color: #f0f0f0;
+                            font-weight: bold;
+                        }
+                        
+                        .amount {
+                            text-align: right;
+                        }
+                        
+                        .total-row {
+                            background-color: #f0f0f0;
+                            font-weight: bold;
+                        }
+                        
+                        .invoice-summary {
+                            margin-top: 30px;
+                        }
+                        
+                        .invoice-summary table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 20px;
+                        }
+                        
+                        .invoice-summary td {
+                            border: 1px solid #000;
+                            padding: 5px;
+                        }
+                        
+                        .summary-text {
+                            margin-top: 20px;
+                            font-size: 11px;
+                        }
+                        
+                        .summary-text p {
+                            margin: 5px 0;
+                        }
+                        
+                        .invoice-footer {
+                            margin-top: 30px;
+                            text-align: center;
+                            font-size: 10px;
+                            color: #666;
+                        }
+                        
+                        .consumption-table {
+                            margin-top: 30px;
+                            page-break-before: always;
+                        }
+                        
+                        .consumption-table h4 {
+                            margin: 0 0 15px 0;
+                            font-size: 14px;
+                        }
+                        
+                        @media print {
+                            .no-print {
+                                display: none;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${invoiceContainer.innerHTML}
+                </body>
+                </html>
+            `;
+            
+            // Write the HTML to the new window
+            printWindow.document.write(printHTML);
+            printWindow.document.close();
+            
+            // Wait for content to load, then print
+            printWindow.onload = function() {
+                printWindow.print();
+                printWindow.close();
+            };
         }
     </script>
 </body>
