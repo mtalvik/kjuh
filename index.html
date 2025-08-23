@@ -429,7 +429,7 @@
             const k1_prugivedu = KORTER1_AREA * prugivedu;
             const k1_elektrPaevane = paevaneElekter1 * elektrPaevane;
             const k1_elektrOine = oineElekter1 * elektrOine;
-            const k1_vesi = kulmVesi1 * vesi;
+            const k1_vesi = (kulmVesi1 + soeVesi1) * vesi;
             const k1_veeSoojendamine = soeVesi1 * veeSoojendamine;
 
             // Calculate costs for Korter 2
@@ -441,7 +441,7 @@
             const k2_prugivedu = KORTER2_AREA * prugivedu;
             const k2_elektrPaevane = paevaneElekter2 * elektrPaevane;
             const k2_elektrOine = oineElekter2 * elektrOine;
-            const k2_vesi = kulmVesi2 * vesi;
+            const k2_vesi = (kulmVesi2 + soeVesi2) * vesi;
             const k2_veeSoojendamine = soeVesi2 * veeSoojendamine;
 
             // Calculate totals
@@ -561,7 +561,7 @@
                             <tr>
                                 <td>Vesi</td>
                                 <td>${period}</td>
-                                <td>${formatNumber(kulmVesi1 + kulmVesi2, 2)}</td>
+                                <td>${formatNumber(kulmVesi1 + kulmVesi2 + soeVesi1 + soeVesi2, 2)}</td>
                                 <td>m³</td>
                                 <td>${formatNumber(vesi, 4)}</td>
                                 <td class="amount">${formatNumber(k1_vesi + k2_vesi)}</td>
