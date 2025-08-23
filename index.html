@@ -401,6 +401,8 @@
             const includeViivised = document.getElementById('includeViivised').checked;
             const viivisedAmount = includeViivised ? getInputValue('viivisedAmount') : 0;
 
+            console.log('Viivised settings:', { includeViivised, viivisedAmount });
+
             // Calculate consumptions
             const kulmVesi1 = getInputValue('kulmVesi1Lopp') - getInputValue('kulmVesi1Algn');
             const kulmVesi2 = getInputValue('kulmVesi2Lopp') - getInputValue('kulmVesi2Algn');
@@ -456,25 +458,30 @@
                         <p>Majaka tn 54, 11412 Tallinn, Reg. nr 80541496</p>
                     </div>
                     
-                    <div class="invoice-info">
-                        <div class="company-info">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 25px;">
+                        <div style="text-align: left;">
                             <strong>MARIA TALVIK</strong><br>
                             Majaka tn 54-9<br>
                             11412 Tallinn
                         </div>
-                        <div class="invoice-details">
-                            <strong>ARVE nr ${invoiceNumber}</strong><br>
-                            Kuupäev ${invoiceDate}<br>
-                            Maksetähtaeg ${dueDate}<br>
-                            Viivis 0.022% päevas<br>
-                            Viitenumber 97<br>
-                            SWEDBANK EE772200221071147195
+                        <div style="text-align: right;">
+                            <div style="border: 2px solid #333; padding: 10px; display: inline-block;">
+                                <div><strong>ARVE nr ${invoiceNumber}</strong></div>
+                                <div>Kuupäev ${invoiceDate.split('-').reverse().join('.')}</div>
+                                <div>Maksetähtaeg ${dueDate.split('-').reverse().join('.')}</div>
+                                <div>Viivis 0.022% päevas</div>
+                                <div>Viitenumber 97</div>
+                                <div>SWEDBANK EE772200221071147195</div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="apartment-info">
-                        <strong>Korter Majaka tn 54-9</strong><br>
-                        Kogupind ${formatNumber(TOTAL_AREA)} m²
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <div style="border: 2px solid #333; padding: 10px; display: inline-block;">
+                            <div><strong>Korter Majaka tn 54-9</strong></div>
+                            <div>Pind ${formatNumber(TOTAL_AREA)} m²</div>
+                            <div>Köetav pind ${formatNumber(TOTAL_AREA)} m²</div>
+                        </div>
                     </div>
                     
                     <table class="invoice-table">
@@ -602,8 +609,8 @@
                     
                     <div style="margin: 25px 0;">
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-                            <div>
-                                <div>Võlg (seisuga ${invoiceDate}): 0.00</div>
+                            <div style="text-align: left;">
+                                <div>Võlg (seisuga ${invoiceDate.split('-').reverse().join('.')}): 0.00</div>
                                 ${includeViivised ? `<div>Arvestatud viivised: ${formatNumber(viivisedAmount)}</div>` : ''}
                                 <div><strong>Tasumisele kuulub (EUR): ${formatNumber(grandTotal + viivisedAmount)}</strong></div>
                             </div>
