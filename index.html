@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="et">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,20 +10,20 @@
             margin: 20px;
             background-color: #f5f5f5;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-
+        
         .input-section {
             background: white;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
+        
         .invoice {
             background: white;
             padding: 25px;
@@ -38,7 +37,7 @@
             border: 1px solid #000;
             font-family: Arial, sans-serif;
         }
-
+        
         .invoice-header {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -46,7 +45,7 @@
             margin-bottom: 20px;
             align-items: start;
         }
-
+        
         .sender-info h3 {
             font-size: 12px;
             font-weight: bold;
@@ -54,28 +53,28 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
+        
         .sender-info p {
             margin: 0 0 2px 0;
             font-size: 10px;
         }
-
+        
         .recipient-info h4 {
             font-size: 11px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-transform: uppercase;
         }
-
+        
         .recipient-info p {
             margin: 0 0 2px 0;
             font-size: 10px;
         }
-
+        
         .invoice-details {
             text-align: right;
         }
-
+        
         .detail-box {
             border: 1px solid #000;
             padding: 8px;
@@ -84,22 +83,22 @@
             font-size: 9px;
             line-height: 1.2;
         }
-
+        
         .detail-box p {
             margin: 0 0 2px 0;
         }
-
+        
         .detail-box strong {
             font-weight: bold;
         }
-
+        
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
             font-size: 9px;
         }
-
+        
         .invoice-table th,
         .invoice-table td {
             border: 1px solid #000;
@@ -107,38 +106,38 @@
             text-align: left;
             vertical-align: middle;
         }
-
+        
         .invoice-table th {
             background-color: #f0f0f0;
             font-weight: bold;
             text-align: center;
             font-size: 8px;
         }
-
+        
         .invoice-table td {
             text-align: left;
         }
-
+        
         .amount {
             text-align: right !important;
         }
-
+        
         .total-row {
             font-weight: bold;
             background-color: #f0f0f0;
         }
-
+        
         .invoice-summary {
             margin-bottom: 20px;
         }
-
+        
         .summary-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 3px;
             font-size: 10px;
         }
-
+        
         .summary-item.total {
             font-weight: bold;
             font-size: 11px;
@@ -146,36 +145,36 @@
             padding-top: 3px;
             margin-top: 8px;
         }
-
+        
         .summary-text {
             margin-top: 12px;
             font-size: 9px;
         }
-
+        
         .summary-text p {
             margin: 0 0 3px 0;
         }
-
+        
         .summary-text .note {
             color: #666;
         }
-
+        
         .summary-text .important {
             font-weight: bold;
             color: #000;
         }
-
+        
         .consumption-table {
             margin-bottom: 15px;
         }
-
+        
         .consumption-table h4 {
             font-size: 8px;
             font-weight: bold;
             margin: 0 0 4px 0;
             text-transform: uppercase;
         }
-
+        
         .invoice-footer {
             text-align: center;
             font-size: 7px;
@@ -184,7 +183,7 @@
             border-top: 1px solid #ccc;
             padding-top: 8px;
         }
-
+        
         .input-group {
             margin-bottom: 10px;
             display: grid;
@@ -192,17 +191,17 @@
             gap: 10px;
             align-items: center;
         }
-
+        
         .input-group label {
             font-weight: bold;
         }
-
+        
         .input-group input {
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 3px;
         }
-
+        
         .calculate-btn {
             background-color: #007bff;
             color: white;
@@ -213,41 +212,41 @@
             font-size: 16px;
             font-weight: bold;
         }
-
+        
         .calculate-btn:hover {
             background-color: #0056b3;
         }
-
+        
         .rates-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-bottom: 20px;
         }
-
+        
         .meters-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             margin-bottom: 20px;
         }
-
+        
         .meter-section {
             border: 1px solid #ddd;
             padding: 10px;
             border-radius: 4px;
         }
-
+        
         .meter-section h4 {
             margin: 0 0 10px 0;
             font-size: 14px;
             color: #333;
         }
-
+        
         .korter1-col {
             background-color: #f9f9f9;
         }
-
+        
         .korter2-col {
             background-color: #f9f9f9;
         }
@@ -262,14 +261,13 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Majaka tn 54 Invoice Splitter</h1>
-
+        
         <div class="input-section">
             <h2>Invoice Input</h2>
-
+            
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px;">
                 <div class="input-group">
                     <label>Invoice Number:</label>
@@ -287,17 +285,17 @@
                     <label>Due Date:</label>
                     <input type="date" id="dueDate" value="2026-01-31">
                 </div>
+                <div class="input-group">
+                    <label>Eelmisel kuul laekunud:</label>
+                    <input type="number" id="lastMonthPaid" value="231.93" step="0.01">
+                </div>
             </div>
-
+            
             <h3>Shared Costs (per m²)</h3>
             <div class="rates-grid">
                 <div class="input-group">
                     <label>Haldustasu:</label>
                     <input type="number" id="haldustasu" value="0.3242" step="0.0001">
-                </div>
-                <div class="input-group">
-                    <label>Kindlustus:</label>
-                    <input type="number" id="kindlustus" value="0" step="0.0001">
                 </div>
                 <div class="input-group">
                     <label>Remondifond:</label>
@@ -320,7 +318,7 @@
                     <input type="number" id="prugivedu" value="0.08081" step="0.00001">
                 </div>
             </div>
-
+            
             <h3>Utility Rates</h3>
             <div class="rates-grid">
                 <div class="input-group">
@@ -342,8 +340,8 @@
                 <label>Viivised Amount:</label>
                 <input type="number" id="viivisedAmount" value="0.00" step="0.01">
             </div>
-
-            <h3>Meter Readings (from Invoice 25129)</h3>
+            
+            <h3>Meter Readings</h3>
             <div class="meters-grid">
                 <div class="meter-section">
                     <h4>Külm vesi 1 (K1)</h4>
@@ -356,7 +354,7 @@
                         <input type="number" id="kulmVesi1Lopp" value="185.950" step="0.001">
                     </div>
                 </div>
-
+                
                 <div class="meter-section">
                     <h4>Külm vesi 2 (K2)</h4>
                     <div class="input-group">
@@ -368,7 +366,7 @@
                         <input type="number" id="kulmVesi2Lopp" value="189.500" step="0.001">
                     </div>
                 </div>
-
+                
                 <div class="meter-section">
                     <h4>Soe vesi 1 (K1)</h4>
                     <div class="input-group">
@@ -380,7 +378,7 @@
                         <input type="number" id="soeVesi1Lopp" value="133.250" step="0.001">
                     </div>
                 </div>
-
+                
                 <div class="meter-section">
                     <h4>Soe vesi 2 (K2)</h4>
                     <div class="input-group">
@@ -392,7 +390,7 @@
                         <input type="number" id="soeVesi2Lopp" value="30.860" step="0.001">
                     </div>
                 </div>
-
+                
                 <div class="meter-section">
                     <h4>Päev elekter 1 (K1)</h4>
                     <div class="input-group">
@@ -404,7 +402,7 @@
                         <input type="number" id="paevaneElekter1Lopp" value="3361.310" step="0.001">
                     </div>
                 </div>
-
+                
                 <div class="meter-section">
                     <h4>Päev elekter 2 (K2)</h4>
                     <div class="input-group">
@@ -416,38 +414,36 @@
                         <input type="number" id="paevaneElekter2Lopp" value="4246.280" step="0.001">
                     </div>
                 </div>
-
+                
                 <div class="meter-section">
                     <h4>Öö elekter 1 (K1)</h4>
                     <div class="input-group">
                         <label>Algn:</label>
-                        <input type="number" id="oineElekter1Algn" value="2960.700" step="0.001">
+                        <input type="number" id="oineElekter1Algn" value="3010.030" step="0.001">
                     </div>
                     <div class="input-group">
                         <label>Lõpp:</label>
-                        <input type="number" id="oineElekter1Lopp" value="3010.030" step="0.001">
+                        <input type="number" id="oineElekter1Lopp" value="3079.650" step="0.001">
                     </div>
                 </div>
-
+                
                 <div class="meter-section">
                     <h4>Öö elekter 2 (K2)</h4>
                     <div class="input-group">
                         <label>Algn:</label>
-                        <input type="number" id="oineElekter2Algn" value="3379.480" step="0.001">
+                        <input type="number" id="oineElekter2Algn" value="3439.480" step="0.001">
                     </div>
                     <div class="input-group">
                         <label>Lõpp:</label>
-                        <input type="number" id="oineElekter2Lopp" value="3439.480" step="0.001">
+                        <input type="number" id="oineElekter2Lopp" value="3446.890" step="0.001">
                     </div>
                 </div>
             </div>
-
+            
             <button class="calculate-btn" onclick="generateInvoice()">Generate Split Invoice</button>
-            <button onclick="printInvoice()" class="print-btn"
-                style="margin-left: 10px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Print
-                Invoice</button>
+        <button onclick="printInvoice()" class="print-btn" style="margin-left: 10px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Print Invoice</button>
         </div>
-
+        
         <div id="invoiceContainer">
             <!-- Generated invoice will appear here -->
         </div>
@@ -468,17 +464,49 @@
             return num.toFixed(decimals);
         }
 
+        function numberToEstonianWords(num) {
+            const ones = ['', 'üks', 'kaks', 'kolm', 'neli', 'viis', 'kuus', 'seitse', 'kaheksa', 'üheksa'];
+            const teens = ['kümme', 'üksteist', 'kaksteist', 'kolmteist', 'neliteist', 'viisteist', 'kuusteist', 'seitseteist', 'kaheksateist', 'üheksateist'];
+            const tens = ['', 'kümme', 'kakskümmend', 'kolmkümmend', 'nelikümmend', 'viiskümmend', 'kuuskümmend', 'seitsekümmend', 'kaheksakümmend', 'üheksakümmend'];
+            const hundreds = ['', 'sada', 'kakssada', 'kolmsada', 'nelisada', 'viissada', 'kuussada', 'seitsesada', 'kaheksasada', 'üheksasada'];
+
+            const euros = Math.floor(num);
+            const cents = Math.round((num - euros) * 100);
+
+            let result = '';
+
+            if (euros === 0) {
+                result = 'null';
+            } else {
+                const h = Math.floor(euros / 100);
+                const t = Math.floor((euros % 100) / 10);
+                const o = euros % 10;
+
+                if (h > 0) result += hundreds[h] + ' ';
+                
+                if (t === 1) {
+                    result += teens[o] + ' ';
+                } else {
+                    if (t > 0) result += tens[t] + ' ';
+                    if (o > 0) result += ones[o] + ' ';
+                }
+            }
+
+            result = result.trim() + ' eurot ja ' + cents + ' senti';
+            return result;
+        }
+
         function generateInvoice() {
             console.log('Generating split invoice...');
-
+            
             const invoiceNumber = document.getElementById('invoiceNumber').value;
             const invoiceDate = document.getElementById('invoiceDate').value;
             const dueDate = document.getElementById('dueDate').value;
             const period = document.getElementById('period').value;
+            const lastMonthPaid = getInputValue('lastMonthPaid');
 
             // Get rates
             const haldustasu = getInputValue('haldustasu');
-            const kindlustus = getInputValue('kindlustus');
             const remondifond = getInputValue('remondifond');
             const uldelekter = getInputValue('uldelekter');
             const elektrKrt9 = getInputValue('elektrKrt9');
@@ -508,7 +536,7 @@
             const totalVesi2 = kulmVesi2 + soeVesi2;
 
             console.log('Consumptions:', {
-                kulmVesi1, kulmVesi2,
+                kulmVesi1, kulmVesi2, 
                 soeVesi1, soeVesi2,
                 paevaneElekter1, paevaneElekter2,
                 oineElekter1, oineElekter2
@@ -516,7 +544,6 @@
 
             // Calculate costs for Korter 1
             const k1_haldustasu = KORTER1_AREA * haldustasu;
-            const k1_kindlustus = KORTER1_AREA * kindlustus;
             const k1_remondifond = KORTER1_AREA * remondifond;
             const k1_uldelekter = KORTER1_AREA * uldelekter;
             const k1_elektrKrt9 = KORTER1_AREA * elektrKrt9;
@@ -527,7 +554,6 @@
 
             // Calculate costs for Korter 2
             const k2_haldustasu = KORTER2_AREA * haldustasu;
-            const k2_kindlustus = KORTER2_AREA * kindlustus;
             const k2_remondifond = KORTER2_AREA * remondifond;
             const k2_uldelekter = KORTER2_AREA * uldelekter;
             const k2_elektrKrt9 = KORTER2_AREA * elektrKrt9;
@@ -537,11 +563,13 @@
             const k2_veeSoojendamine = soeVesi2 * veeSoojendamine;
 
             // Calculate totals
-            const total1 = k1_haldustasu + k1_kindlustus + k1_remondifond + k1_uldelekter + k1_elektrKrt9 + k1_kute + k1_prugivedu + k1_vesi + k1_veeSoojendamine;
-            const total2 = k2_haldustasu + k2_kindlustus + k2_remondifond + k2_uldelekter + k2_elektrKrt9 + k2_kute + k2_prugivedu + k2_vesi + k2_veeSoojendamine;
+            const total1 = k1_haldustasu + k1_remondifond + k1_uldelekter + k1_elektrKrt9 + k1_kute + k1_prugivedu + k1_vesi + k1_veeSoojendamine;
+            const total2 = k2_haldustasu + k2_remondifond + k2_uldelekter + k2_elektrKrt9 + k2_kute + k2_prugivedu + k2_vesi + k2_veeSoojendamine;
             const grandTotal = total1 + total2;
 
             console.log('Totals:', { total1, total2, grandTotal });
+
+            const summaWords = numberToEstonianWords(grandTotal + viivisedAmount);
 
             const invoice = `
                 <div class="invoice">
@@ -601,16 +629,6 @@
                                 <td class="amount">${formatNumber(k1_haldustasu + k2_haldustasu)}</td>
                                 <td class="amount">${formatNumber(k1_haldustasu)}</td>
                                 <td class="amount">${formatNumber(k2_haldustasu)}</td>
-                            </tr>
-                            <tr>
-                                <td>Kindlustus</td>
-                                <td>${period}</td>
-                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
-                                <td>m²</td>
-                                <td>${formatNumber(kindlustus, 4)}</td>
-                                <td class="amount">${formatNumber(k1_kindlustus + k2_kindlustus)}</td>
-                                <td class="amount">${formatNumber(k1_kindlustus)}</td>
-                                <td class="amount">${formatNumber(k2_kindlustus)}</td>
                             </tr>
                             <tr>
                                 <td>Remondifond</td>
@@ -711,8 +729,8 @@
                             </tr>
                         </table>
                         <div class="summary-text">
-                            <p><strong>Summa sõnadega:</strong> kakssada kolmkümmend üks eurot ja 93 senti</p>
-                            <p><strong>Eelmisel kuul laekunud summa:</strong> 180.29</p>
+                            <p><strong>Summa sõnadega:</strong> ${summaWords}</p>
+                            <p><strong>Eelmisel kuul laekunud summa:</strong> ${formatNumber(lastMonthPaid)}</p>
                             <p class="note">Tasumisele kuuluvale summale võib lisanduda viivis jooksva kuu eest 0.022% päevas.</p>
                             <p class="important">Palume kindlasti märkida tasumisel viitenumber!</p>
                         </div>
@@ -820,13 +838,13 @@
 
         function printInvoice() {
             const printWindow = window.open('', '_blank');
-
+            
             const invoiceContainer = document.getElementById('invoiceContainer');
             if (!invoiceContainer || !invoiceContainer.innerHTML.trim()) {
                 alert('Please generate an invoice first!');
                 return;
             }
-
+            
             const printHTML = `
                 <!DOCTYPE html>
                 <html>
@@ -950,16 +968,15 @@
                 </body>
                 </html>
             `;
-
+            
             printWindow.document.write(printHTML);
             printWindow.document.close();
-
-            printWindow.onload = function () {
+            
+            printWindow.onload = function() {
                 printWindow.print();
                 printWindow.close();
             };
         }
     </script>
 </body>
-
 </html>
