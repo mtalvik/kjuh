@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="et">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,20 +11,20 @@
             margin: 20px;
             background-color: #f5f5f5;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         .input-section {
             background: white;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .invoice {
             background: white;
             padding: 25px;
@@ -37,7 +38,7 @@
             border: 1px solid #000;
             font-family: Arial, sans-serif;
         }
-        
+
         .invoice-header {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -45,7 +46,7 @@
             margin-bottom: 20px;
             align-items: start;
         }
-        
+
         .sender-info h3 {
             font-size: 12px;
             font-weight: bold;
@@ -53,28 +54,28 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .sender-info p {
             margin: 0 0 2px 0;
             font-size: 10px;
         }
-        
+
         .recipient-info h4 {
             font-size: 11px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-transform: uppercase;
         }
-        
+
         .recipient-info p {
             margin: 0 0 2px 0;
             font-size: 10px;
         }
-        
+
         .invoice-details {
             text-align: right;
         }
-        
+
         .detail-box {
             border: 1px solid #000;
             padding: 8px;
@@ -83,22 +84,22 @@
             font-size: 9px;
             line-height: 1.2;
         }
-        
+
         .detail-box p {
             margin: 0 0 2px 0;
         }
-        
+
         .detail-box strong {
             font-weight: bold;
         }
-        
+
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
             font-size: 9px;
         }
-        
+
         .invoice-table th,
         .invoice-table td {
             border: 1px solid #000;
@@ -106,38 +107,38 @@
             text-align: left;
             vertical-align: middle;
         }
-        
+
         .invoice-table th {
             background-color: #f0f0f0;
             font-weight: bold;
             text-align: center;
             font-size: 8px;
         }
-        
+
         .invoice-table td {
             text-align: left;
         }
-        
+
         .amount {
             text-align: right !important;
         }
-        
+
         .total-row {
             font-weight: bold;
             background-color: #f0f0f0;
         }
-        
+
         .invoice-summary {
             margin-bottom: 20px;
         }
-        
+
         .summary-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 3px;
             font-size: 10px;
         }
-        
+
         .summary-item.total {
             font-weight: bold;
             font-size: 11px;
@@ -145,36 +146,36 @@
             padding-top: 3px;
             margin-top: 8px;
         }
-        
+
         .summary-text {
             margin-top: 12px;
             font-size: 9px;
         }
-        
+
         .summary-text p {
             margin: 0 0 3px 0;
         }
-        
+
         .summary-text .note {
             color: #666;
         }
-        
+
         .summary-text .important {
             font-weight: bold;
             color: #000;
         }
-        
+
         .consumption-table {
             margin-bottom: 15px;
         }
-        
+
         .consumption-table h4 {
             font-size: 8px;
             font-weight: bold;
             margin: 0 0 4px 0;
             text-transform: uppercase;
         }
-        
+
         .invoice-footer {
             text-align: center;
             font-size: 7px;
@@ -183,7 +184,7 @@
             border-top: 1px solid #ccc;
             padding-top: 8px;
         }
-        
+
         .input-group {
             margin-bottom: 10px;
             display: grid;
@@ -191,17 +192,17 @@
             gap: 10px;
             align-items: center;
         }
-        
+
         .input-group label {
             font-weight: bold;
         }
-        
+
         .input-group input {
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 3px;
         }
-        
+
         .calculate-btn {
             background-color: #007bff;
             color: white;
@@ -212,41 +213,41 @@
             font-size: 16px;
             font-weight: bold;
         }
-        
+
         .calculate-btn:hover {
             background-color: #0056b3;
         }
-        
+
         .rates-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-bottom: 20px;
         }
-        
+
         .meters-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             margin-bottom: 20px;
         }
-        
+
         .meter-section {
             border: 1px solid #ddd;
             padding: 10px;
             border-radius: 4px;
         }
-        
+
         .meter-section h4 {
             margin: 0 0 10px 0;
             font-size: 14px;
             color: #333;
         }
-        
+
         .korter1-col {
             background-color: #f9f9f9;
         }
-        
+
         .korter2-col {
             background-color: #f9f9f9;
         }
@@ -261,32 +262,33 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Majaka tn 54 Invoice Splitter</h1>
-        
+
         <div class="input-section">
             <h2>Invoice Input</h2>
-            
+
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px;">
                 <div class="input-group">
                     <label>Invoice Number:</label>
-                    <input type="text" id="invoiceNumber" value="25129">
+                    <input type="text" id="invoiceNumber" value="26019">
                 </div>
                 <div class="input-group">
                     <label>Period:</label>
-                    <input type="text" id="period" value="11/2025">
+                    <input type="text" id="period" value="12/2025">
                 </div>
                 <div class="input-group">
                     <label>Invoice Date:</label>
-                    <input type="date" id="invoiceDate" value="2025-11-30">
+                    <input type="date" id="invoiceDate" value="2025-12-31">
                 </div>
                 <div class="input-group">
                     <label>Due Date:</label>
-                    <input type="date" id="dueDate" value="2025-12-31">
+                    <input type="date" id="dueDate" value="2026-01-31">
                 </div>
             </div>
-            
+
             <h3>Shared Costs (per m²)</h3>
             <div class="rates-grid">
                 <div class="input-group">
@@ -295,7 +297,7 @@
                 </div>
                 <div class="input-group">
                     <label>Kindlustus:</label>
-                    <input type="number" id="kindlustus" value="0.1461" step="0.0001">
+                    <input type="number" id="kindlustus" value="0" step="0.0001">
                 </div>
                 <div class="input-group">
                     <label>Remondifond:</label>
@@ -303,22 +305,22 @@
                 </div>
                 <div class="input-group">
                     <label>Üldelekter:</label>
-                    <input type="number" id="uldelekter" value="0.05600" step="0.00001">
+                    <input type="number" id="uldelekter" value="0.04988" step="0.00001">
                 </div>
                 <div class="input-group">
                     <label>Elekter (krt 9):</label>
-                    <input type="number" id="elektrKrt9" value="0.55857" step="0.00001">
+                    <input type="number" id="elektrKrt9" value="0.57935" step="0.00001">
                 </div>
                 <div class="input-group">
                     <label>Küte:</label>
-                    <input type="number" id="kute" value="1.01587" step="0.00001">
+                    <input type="number" id="kute" value="1.27524" step="0.00001">
                 </div>
                 <div class="input-group">
                     <label>Prügivedu:</label>
-                    <input type="number" id="prugivedu" value="0.07345" step="0.00001">
+                    <input type="number" id="prugivedu" value="0.08081" step="0.00001">
                 </div>
             </div>
-            
+
             <h3>Utility Rates</h3>
             <div class="rates-grid">
                 <div class="input-group">
@@ -327,7 +329,7 @@
                 </div>
                 <div class="input-group">
                     <label>Vee soojendamine:</label>
-                    <input type="number" id="veeSoojendamine" value="5.283125" step="0.000001">
+                    <input type="number" id="veeSoojendamine" value="5.369734" step="0.000001">
                 </div>
             </div>
 
@@ -340,81 +342,81 @@
                 <label>Viivised Amount:</label>
                 <input type="number" id="viivisedAmount" value="0.00" step="0.01">
             </div>
-            
+
             <h3>Meter Readings (from Invoice 25129)</h3>
             <div class="meters-grid">
                 <div class="meter-section">
                     <h4>Külm vesi 1 (K1)</h4>
                     <div class="input-group">
                         <label>Algn:</label>
-                        <input type="number" id="kulmVesi1Algn" value="182.150" step="0.001">
+                        <input type="number" id="kulmVesi1Algn" value="183.620" step="0.001">
                     </div>
                     <div class="input-group">
                         <label>Lõpp:</label>
-                        <input type="number" id="kulmVesi1Lopp" value="183.620" step="0.001">
+                        <input type="number" id="kulmVesi1Lopp" value="185.950" step="0.001">
                     </div>
                 </div>
-                
+
                 <div class="meter-section">
                     <h4>Külm vesi 2 (K2)</h4>
                     <div class="input-group">
                         <label>Algn:</label>
-                        <input type="number" id="kulmVesi2Algn" value="184.110" step="0.001">
+                        <input type="number" id="kulmVesi2Algn" value="187.990" step="0.001">
                     </div>
                     <div class="input-group">
                         <label>Lõpp:</label>
-                        <input type="number" id="kulmVesi2Lopp" value="187.990" step="0.001">
+                        <input type="number" id="kulmVesi2Lopp" value="189.500" step="0.001">
                     </div>
                 </div>
-                
+
                 <div class="meter-section">
                     <h4>Soe vesi 1 (K1)</h4>
                     <div class="input-group">
                         <label>Algn:</label>
-                        <input type="number" id="soeVesi1Algn" value="130.010" step="0.001">
+                        <input type="number" id="soeVesi1Algn" value="131.440" step="0.001">
                     </div>
                     <div class="input-group">
                         <label>Lõpp:</label>
-                        <input type="number" id="soeVesi1Lopp" value="131.440" step="0.001">
+                        <input type="number" id="soeVesi1Lopp" value="133.250" step="0.001">
                     </div>
                 </div>
-                
+
                 <div class="meter-section">
                     <h4>Soe vesi 2 (K2)</h4>
                     <div class="input-group">
                         <label>Algn:</label>
-                        <input type="number" id="soeVesi2Algn" value="27.430" step="0.001">
+                        <input type="number" id="soeVesi2Algn" value="29.520" step="0.001">
                     </div>
                     <div class="input-group">
                         <label>Lõpp:</label>
-                        <input type="number" id="soeVesi2Lopp" value="29.520" step="0.001">
+                        <input type="number" id="soeVesi2Lopp" value="30.860" step="0.001">
                     </div>
                 </div>
-                
+
                 <div class="meter-section">
                     <h4>Päev elekter 1 (K1)</h4>
                     <div class="input-group">
                         <label>Algn:</label>
-                        <input type="number" id="paevaneElekter1Algn" value="3228.700" step="0.001">
+                        <input type="number" id="paevaneElekter1Algn" value="3266.930" step="0.001">
                     </div>
                     <div class="input-group">
                         <label>Lõpp:</label>
-                        <input type="number" id="paevaneElekter1Lopp" value="3266.930" step="0.001">
+                        <input type="number" id="paevaneElekter1Lopp" value="3361.310" step="0.001">
                     </div>
                 </div>
-                
+
                 <div class="meter-section">
                     <h4>Päev elekter 2 (K2)</h4>
                     <div class="input-group">
                         <label>Algn:</label>
-                        <input type="number" id="paevaneElekter2Algn" value="4136.920" step="0.001">
+                        <input type="number" id="paevaneElekter2Algn" value="4186.920" step="0.001">
                     </div>
                     <div class="input-group">
                         <label>Lõpp:</label>
-                        <input type="number" id="paevaneElekter2Lopp" value="4186.920" step="0.001">
+                        <input type="number" id="paevaneElekter2Lopp" value="4246.280" step="0.001">
                     </div>
                 </div>
-                
+
                 <div class="meter-section">
                     <h4>Öö elekter 1 (K1)</h4>
                     <div class="input-group">
@@ -426,7 +428,7 @@
                         <input type="number" id="oineElekter1Lopp" value="3010.030" step="0.001">
                     </div>
                 </div>
-                
+
                 <div class="meter-section">
                     <h4>Öö elekter 2 (K2)</h4>
                     <div class="input-group">
@@ -439,11 +441,13 @@
                     </div>
                 </div>
             </div>
-            
+
             <button class="calculate-btn" onclick="generateInvoice()">Generate Split Invoice</button>
-        <button onclick="printInvoice()" class="print-btn" style="margin-left: 10px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Print Invoice</button>
+            <button onclick="printInvoice()" class="print-btn"
+                style="margin-left: 10px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Print
+                Invoice</button>
         </div>
-        
+
         <div id="invoiceContainer">
             <!-- Generated invoice will appear here -->
         </div>
@@ -466,7 +470,7 @@
 
         function generateInvoice() {
             console.log('Generating split invoice...');
-            
+
             const invoiceNumber = document.getElementById('invoiceNumber').value;
             const invoiceDate = document.getElementById('invoiceDate').value;
             const dueDate = document.getElementById('dueDate').value;
@@ -504,7 +508,7 @@
             const totalVesi2 = kulmVesi2 + soeVesi2;
 
             console.log('Consumptions:', {
-                kulmVesi1, kulmVesi2, 
+                kulmVesi1, kulmVesi2,
                 soeVesi1, soeVesi2,
                 paevaneElekter1, paevaneElekter2,
                 oineElekter1, oineElekter2
@@ -816,13 +820,13 @@
 
         function printInvoice() {
             const printWindow = window.open('', '_blank');
-            
+
             const invoiceContainer = document.getElementById('invoiceContainer');
             if (!invoiceContainer || !invoiceContainer.innerHTML.trim()) {
                 alert('Please generate an invoice first!');
                 return;
             }
-            
+
             const printHTML = `
                 <!DOCTYPE html>
                 <html>
@@ -946,15 +950,16 @@
                 </body>
                 </html>
             `;
-            
+
             printWindow.document.write(printHTML);
             printWindow.document.close();
-            
-            printWindow.onload = function() {
+
+            printWindow.onload = function () {
                 printWindow.print();
                 printWindow.close();
             };
         }
     </script>
 </body>
+
 </html>
