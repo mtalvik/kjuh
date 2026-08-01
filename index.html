@@ -1,1189 +1,513 @@
 <!DOCTYPE html>
 <html lang="et">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Majaka tn 54 Invoice Splitter</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .input-section {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .invoice {
-            background: white;
-            padding: 25px;
-            border-radius: 0;
-            box-shadow: none;
-            max-width: 210mm;
-            min-height: 297mm;
-            margin: 0 auto;
-            font-size: 10px;
-            line-height: 1.3;
-            border: 1px solid #000;
-            font-family: Arial, sans-serif;
-        }
-        
-        .invoice-header {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 20px;
-            align-items: start;
-        }
-        
-        .sender-info h3 {
-            font-size: 12px;
-            font-weight: bold;
-            margin: 0 0 3px 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .sender-info p {
-            margin: 0 0 2px 0;
-            font-size: 10px;
-        }
-        
-        .recipient-info h4 {
-            font-size: 11px;
-            font-weight: bold;
-            margin: 0 0 3px 0;
-            text-transform: uppercase;
-        }
-        
-        .recipient-info p {
-            margin: 0 0 2px 0;
-            font-size: 10px;
-        }
-        
-        .invoice-details {
-            text-align: right;
-        }
-        
-        .detail-box {
-            border: 1px solid #000;
-            padding: 8px;
-            background: white;
-            margin-bottom: 8px;
-            font-size: 9px;
-            line-height: 1.2;
-        }
-        
-        .detail-box p {
-            margin: 0 0 2px 0;
-        }
-        
-        .detail-box strong {
-            font-weight: bold;
-        }
-        
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 9px;
-        }
-        
-        .invoice-table th,
-        .invoice-table td {
-            border: 1px solid #000;
-            padding: 4px 3px;
-            text-align: left;
-            vertical-align: middle;
-        }
-        
-        .invoice-table th {
-            background-color: #f0f0f0;
-            font-weight: bold;
-            text-align: center;
-            font-size: 8px;
-        }
-        
-        .invoice-table td {
-            text-align: left;
-        }
-        
-        .amount {
-            text-align: right !important;
-        }
-        
-        .total-row {
-            font-weight: bold;
-            background-color: #f0f0f0;
-        }
-        
-        .invoice-summary {
-            margin-bottom: 20px;
-        }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 3px;
-            font-size: 10px;
-        }
-        
-        .summary-item.total {
-            font-weight: bold;
-            font-size: 11px;
-            border-top: 1px solid #000;
-            padding-top: 3px;
-            margin-top: 8px;
-        }
-        
-        .summary-text {
-            margin-top: 12px;
-            font-size: 9px;
-        }
-        
-        .summary-text p {
-            margin: 0 0 3px 0;
-        }
-        
-        .summary-text .note {
-            color: #666;
-        }
-        
-        .summary-text .important {
-            font-weight: bold;
-            color: #000;
-        }
-        
-        .consumption-table {
-            margin-bottom: 15px;
-        }
-        
-        .consumption-table h4 {
-            font-size: 8px;
-            font-weight: bold;
-            margin: 0 0 4px 0;
-            text-transform: uppercase;
-        }
-        
-        .invoice-footer {
-            text-align: center;
-            font-size: 7px;
-            color: #666;
-            margin-top: 15px;
-            border-top: 1px solid #ccc;
-            padding-top: 8px;
-        }
-        
-        .input-group {
-            margin-bottom: 10px;
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .input-group label {
-            font-weight: bold;
-        }
-        
-        .input-group input {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        
-        .month-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            background-color: #eef4fb;
-            border: 1px solid #b8d4f0;
-            border-radius: 5px;
-        }
-        
-        .month-bar label {
-            font-weight: bold;
-            font-size: 15px;
-        }
-        
-        .month-bar select {
-            padding: 7px 10px;
-            font-size: 15px;
-            border: 1px solid #999;
-            border-radius: 3px;
-            background: white;
-        }
-        
-        .month-bar .hint {
-            font-size: 12px;
-            color: #555;
-        }
-        
-        .calculate-btn {
-            background-color: #007bff;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        
-        .calculate-btn:hover {
-            background-color: #0056b3;
-        }
-        
-        .rates-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .meters-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .meter-section {
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 4px;
-        }
-        
-        .meter-section h4 {
-            margin: 0 0 10px 0;
-            font-size: 14px;
-            color: #333;
-        }
-        
-        .korter1-col {
-            background-color: #f9f9f9;
-        }
-        
-        .korter2-col {
-            background-color: #f9f9f9;
-        }
-
-        .error {
-            background-color: #ffe6e6;
-            border: 1px solid #ff9999;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            color: #cc0000;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Majaka tn 54 Invoice Splitter</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+.container { max-width: 1200px; margin: 0 auto; }
+.input-section { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.invoice { background: white; padding: 25px; max-width: 210mm; min-height: 297mm; margin: 0 auto; font-size: 10px; line-height: 1.3; border: 1px solid #000; font-family: Arial, sans-serif; }
+.sender-info h3 { font-size: 12px; font-weight: bold; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+.sender-info p { margin: 0 0 2px 0; font-size: 10px; }
+.recipient-info h4 { font-size: 11px; font-weight: bold; margin: 0 0 3px 0; text-transform: uppercase; }
+.recipient-info p { margin: 0 0 2px 0; font-size: 10px; }
+.detail-box { border: 1px solid #000; padding: 8px; background: white; margin-bottom: 8px; font-size: 9px; line-height: 1.2; }
+.detail-box p { margin: 0 0 2px 0; }
+.invoice-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 9px; }
+.invoice-table th, .invoice-table td { border: 1px solid #000; padding: 4px 3px; text-align: left; vertical-align: middle; }
+.invoice-table th { background-color: #f0f0f0; font-weight: bold; text-align: center; font-size: 8px; }
+.amount { text-align: right !important; }
+.total-row { font-weight: bold; background-color: #f0f0f0; }
+.summary-text { margin-top: 12px; font-size: 9px; }
+.summary-text p { margin: 0 0 3px 0; }
+.summary-text .note { color: #666; }
+.summary-text .important { font-weight: bold; color: #000; }
+.consumption-table { margin-bottom: 15px; }
+.consumption-table h4 { font-size: 8px; font-weight: bold; margin: 0 0 4px 0; text-transform: uppercase; }
+.invoice-footer { text-align: center; font-size: 7px; color: #666; margin-top: 15px; border-top: 1px solid #ccc; padding-top: 8px; }
+.input-group { margin-bottom: 10px; display: grid; grid-template-columns: 200px 1fr; gap: 10px; align-items: center; }
+.input-group label { font-weight: bold; }
+.input-group input { padding: 5px; border: 1px solid #ccc; border-radius: 3px; }
+.month-bar { display: flex; align-items: center; gap: 12px; padding: 12px 15px; margin-bottom: 20px; background-color: #eef4fb; border: 1px solid #b8d4f0; border-radius: 5px; flex-wrap: wrap; }
+.month-bar label { font-weight: bold; font-size: 15px; }
+.month-bar select { padding: 7px 10px; font-size: 15px; border: 1px solid #999; border-radius: 3px; background: white; }
+.month-bar .hint { font-size: 12px; color: #555; }
+.calculate-btn { background-color: #007bff; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
+.calculate-btn:hover { background-color: #0056b3; }
+.rates-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+.meters-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+.meter-section { border: 1px solid #ddd; padding: 10px; border-radius: 4px; }
+.meter-section h4 { margin: 0 0 10px 0; font-size: 14px; color: #333; }
+.optional-note { font-size: 12px; color: #777; margin: -8px 0 12px 0; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Majaka tn 54 Invoice Splitter</h1>
-        
-        <div class="input-section">
-            <div class="month-bar">
-                <label for="monthSelect">Kuu:</label>
-                <select id="monthSelect" onchange="loadMonth(this.value)">
-                    <option value="2026-04">04/2026 &mdash; arve 26059</option>
-                    <option value="2026-05">05/2026 &mdash; arve 26069</option>
-                    <option value="2026-06" selected>06/2026 &mdash; arve 26079</option>
-                    <option value="2026-07">07/2026 &mdash; t&auml;itmata</option>
-                </select>
-                <span class="hint">Valik t&auml;idab k&otilde;ik v&auml;ljad. Uue kuu lisamiseks vaata <code>MONTHS</code> koodis.</span>
-            </div>
+<div class="container">
+<h1>Majaka tn 54 Invoice Splitter</h1>
 
-            <h2>Invoice Input</h2>
-            
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px;">
-                <div class="input-group">
-                    <label>Invoice Number:</label>
-                    <input type="text" id="invoiceNumber" value="26079">
-                </div>
-                <div class="input-group">
-                    <label>Period:</label>
-                    <input type="text" id="period" value="06/2026">
-                </div>
-                <div class="input-group">
-                    <label>Invoice Date:</label>
-                    <input type="date" id="invoiceDate" value="2026-06-30">
-                </div>
-                <div class="input-group">
-                    <label>Due Date:</label>
-                    <input type="date" id="dueDate" value="2026-07-31">
-                </div>
-                <div class="input-group">
-                    <label>Eelmisel kuul laekunud:</label>
-                    <input type="number" id="lastMonthPaid" value="0.00" step="0.01">
-                </div>
-            </div>
-            
-            <h3>Shared Costs (per m²)</h3>
-            <div class="rates-grid">
-                <div class="input-group">
-                    <label>Haldustasu:</label>
-                    <input type="number" id="haldustasu" value="0.3689" step="0.0001">
-                </div>
-                <div class="input-group">
-                    <label>Remondifond:</label>
-                    <input type="number" id="remondifond" value="0.2347" step="0.0001">
-                </div>
-                <div class="input-group">
-                    <label>Üldelekter:</label>
-                    <input type="number" id="uldelekter" value="0.02975" step="0.00001">
-                </div>
-                <div class="input-group">
-                    <label>Elekter (krt 9):</label>
-                    <input type="number" id="elektrKrt9" value="0.36370" step="0.00001">
-                </div>
-                <div class="input-group">
-                    <label>Küte:</label>
-                    <input type="number" id="kute" value="0" step="0.00001">
-                </div>
-                <div class="input-group">
-                    <label>Prügivedu:</label>
-                    <input type="number" id="prugivedu" value="0.08081" step="0.00001">
-                </div>
-            </div>
-            
-            <h3>Utility Rates</h3>
-            <div class="rates-grid">
-                <div class="input-group">
-                    <label>Vesi:</label>
-                    <input type="number" id="vesi" value="2.6040" step="0.0001">
-                </div>
-                <div class="input-group">
-                    <label>Vee soojendamine:</label>
-                    <input type="number" id="veeSoojendamine" value="11.727359" step="0.000001">
-                </div>
-            </div>
-
-            <h3>Additional Options</h3>
-            <div class="input-group">
-                <label>Include Viivised:</label>
-                <input type="checkbox" id="includeViivised">
-            </div>
-            <div class="input-group">
-                <label>Viivised Amount:</label>
-                <input type="number" id="viivisedAmount" value="0.00" step="0.01">
-            </div>
-            
-            <h3>Meter Readings</h3>
-            <div class="meters-grid">
-                <div class="meter-section">
-                    <h4>Külm vesi 1 (K1)</h4>
-                    <div class="input-group">
-                        <label>Algn:</label>
-                        <input type="number" id="kulmVesi1Algn" value="195.340" step="0.001">
-                    </div>
-                    <div class="input-group">
-                        <label>Lõpp:</label>
-                        <input type="number" id="kulmVesi1Lopp" value="196.910" step="0.001">
-                    </div>
-                </div>
-                
-                <div class="meter-section">
-                    <h4>Külm vesi 2 (K2)</h4>
-                    <div class="input-group">
-                        <label>Algn:</label>
-                        <input type="number" id="kulmVesi2Algn" value="200.900" step="0.001">
-                    </div>
-                    <div class="input-group">
-                        <label>Lõpp:</label>
-                        <input type="number" id="kulmVesi2Lopp" value="200.900" step="0.001">
-                    </div>
-                </div>
-                
-                <div class="meter-section">
-                    <h4>Soe vesi 1 (K1)</h4>
-                    <div class="input-group">
-                        <label>Algn:</label>
-                        <input type="number" id="soeVesi1Algn" value="140.270" step="0.001">
-                    </div>
-                    <div class="input-group">
-                        <label>Lõpp:</label>
-                        <input type="number" id="soeVesi1Lopp" value="141.120" step="0.001">
-                    </div>
-                </div>
-                
-                <div class="meter-section">
-                    <h4>Soe vesi 2 (K2)</h4>
-                    <div class="input-group">
-                        <label>Algn:</label>
-                        <input type="number" id="soeVesi2Algn" value="39.700" step="0.001">
-                    </div>
-                    <div class="input-group">
-                        <label>Lõpp:</label>
-                        <input type="number" id="soeVesi2Lopp" value="39.700" step="0.001">
-                    </div>
-                </div>
-                
-                <div class="meter-section">
-                    <h4>Päev elekter 1 (K1)</h4>
-                    <div class="input-group">
-                        <label>Algn:</label>
-                        <input type="number" id="paevaneElekter1Algn" value="3631.580" step="0.001">
-                    </div>
-                    <div class="input-group">
-                        <label>Lõpp:</label>
-                        <input type="number" id="paevaneElekter1Lopp" value="3686.880" step="0.001">
-                    </div>
-                </div>
-                
-                <div class="meter-section">
-                    <h4>Päev elekter 2 (K2)</h4>
-                    <div class="input-group">
-                        <label>Algn:</label>
-                        <input type="number" id="paevaneElekter2Algn" value="4453.660" step="0.001">
-                    </div>
-                    <div class="input-group">
-                        <label>Lõpp:</label>
-                        <input type="number" id="paevaneElekter2Lopp" value="4464.990" step="0.001">
-                    </div>
-                </div>
-                
-                <div class="meter-section">
-                    <h4>Öö elekter 1 (K1)</h4>
-                    <div class="input-group">
-                        <label>Algn:</label>
-                        <input type="number" id="oineElekter1Algn" value="3385.080" step="0.001">
-                    </div>
-                    <div class="input-group">
-                        <label>Lõpp:</label>
-                        <input type="number" id="oineElekter1Lopp" value="3433.440" step="0.001">
-                    </div>
-                </div>
-                
-                <div class="meter-section">
-                    <h4>Öö elekter 2 (K2)</h4>
-                    <div class="input-group">
-                        <label>Algn:</label>
-                        <input type="number" id="oineElekter2Algn" value="3594.680" step="0.001">
-                    </div>
-                    <div class="input-group">
-                        <label>Lõpp:</label>
-                        <input type="number" id="oineElekter2Lopp" value="3606.550" step="0.001">
-                    </div>
-                </div>
-            </div>
-            
-            <button class="calculate-btn" onclick="generateInvoice()">Generate Split Invoice</button>
-        <button onclick="printInvoice()" class="print-btn" style="margin-left: 10px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Print Invoice</button>
-        </div>
-        
-        <div id="invoiceContainer">
-            <!-- Generated invoice will appear here -->
-        </div>
+<div class="input-section">
+    <div class="month-bar">
+        <label for="monthSelect">Kuu:</label>
+        <select id="monthSelect" onchange="loadMonth(this.value)">
+            <option value="2025-09">09/2025 &mdash; arve 25109</option>
+            <option value="2025-10">10/2025 &mdash; arve 25119</option>
+            <option value="2025-11">11/2025 &mdash; arve 25129</option>
+            <option value="2025-12">12/2025 &mdash; arve 26019</option>
+            <option value="2026-01">01/2026 &mdash; arve 26029</option>
+            <option value="2026-02">02/2026 &mdash; arve 26039</option>
+            <option value="2026-03">03/2026 &mdash; arve 26049</option>
+            <option value="2026-04">04/2026 &mdash; arve 26059</option>
+            <option value="2026-05">05/2026 &mdash; arve 26069</option>
+            <option value="2026-06" selected>06/2026 &mdash; arve 26079</option>
+        </select>
+        <span class="hint">Valik t&auml;idab k&otilde;ik v&auml;ljad. Uus kuu: lisa blokk <code>MONTHS</code>-i ja &uuml;ks <code>&lt;option&gt;</code>.</span>
     </div>
 
-    <script>
-        const TOTAL_AREA = 79.90;
-        const KORTER1_INDEX = 0.45557;
-        const KORTER2_INDEX = 0.54443;
-        const KORTER1_AREA = TOTAL_AREA * KORTER1_INDEX;
-        const KORTER2_AREA = TOTAL_AREA * KORTER2_INDEX;
+    <h2>Arve andmed</h2>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px;">
+        <div class="input-group"><label>Arve nr:</label><input type="text" id="invoiceNumber"></div>
+        <div class="input-group"><label>Periood:</label><input type="text" id="period"></div>
+        <div class="input-group"><label>Kuup&auml;ev:</label><input type="date" id="invoiceDate"></div>
+        <div class="input-group"><label>Makset&auml;htaeg:</label><input type="date" id="dueDate"></div>
+    </div>
 
-        // ------------------------------------------------------------------
-        // Kuude andmed. Uue kuu lisamiseks: kopeeri viimane blokk, muuda
-        // numbrid, ja lisa <option> monthSelect'i. Algnäidud = eelmise kuu
-        // lõppnäidud.
-        // ------------------------------------------------------------------
-        const MONTHS = {
-            '2026-04': {
-                invoiceNumber: '26059',
-                period: '04/2026',
-                invoiceDate: '2026-04-30',
-                dueDate: '2026-05-31',
-                lastMonthPaid: 205.60,
-                haldustasu: 0.3242,
-                remondifond: 0.2068,
-                uldelekter: 0.04463,
-                elektrKrt9: 0.45394,
-                kute: 0.86020,
-                prugivedu: 0.08081,
-                vesi: 2.6040,
-                veeSoojendamine: 5.611289,
-                meters: {
-                    kulmVesi1:        [191.870, 193.530],
-                    kulmVesi2:        [196.550, 198.070],
-                    soeVesi1:         [137.620, 139.080],
-                    soeVesi2:         [36.660, 38.070],
-                    paevaneElekter1:  [3517.590, 3586.540],
-                    paevaneElekter2:  [4374.080, 4416.440],
-                    oineElekter1:     [3256.740, 3321.500],
-                    oineElekter2:     [3541.350, 3564.970]
-                }
-            },
-            '2026-05': {
-                invoiceNumber: '26069',
-                period: '05/2026',
-                invoiceDate: '2026-05-31',
-                dueDate: '2026-06-30',
-                lastMonthPaid: 189.30,
-                haldustasu: 0.3689,
-                remondifond: 0.2347,
-                uldelekter: 0.04161,
-                elektrKrt9: 0.44255,
-                kute: 0.20107,
-                prugivedu: 0.07345,
-                vesi: 2.6040,
-                veeSoojendamine: 5.611289,
-                meters: {
-                    kulmVesi1:        [193.530, 195.340],
-                    kulmVesi2:        [198.070, 200.900],
-                    soeVesi1:         [139.080, 140.270],
-                    soeVesi2:         [38.070, 39.700],
-                    paevaneElekter1:  [3586.540, 3631.580],
-                    paevaneElekter2:  [4416.440, 4453.660],
-                    oineElekter1:     [3321.500, 3385.080],
-                    oineElekter2:     [3564.970, 3594.680]
-                }
-            },
-            '2026-06': {
-                invoiceNumber: '26079',
-                period: '06/2026',
-                invoiceDate: '2026-06-30',
-                dueDate: '2026-07-31',
-                lastMonthPaid: 0.00,
-                haldustasu: 0.3689,
-                remondifond: 0.2347,
-                uldelekter: 0.02975,
-                elektrKrt9: 0.36370,
-                kute: 0,              // juunis kütet arvel ei ole
-                prugivedu: 0.08081,
-                vesi: 2.6040,
-                veeSoojendamine: 11.727359,
-                meters: {
-                    kulmVesi1:        [195.340, 196.910],
-                    kulmVesi2:        [200.900, 200.900],
-                    soeVesi1:         [140.270, 141.120],
-                    soeVesi2:         [39.700, 39.700],
-                    paevaneElekter1:  [3631.580, 3686.880],
-                    paevaneElekter2:  [4453.660, 4464.990],
-                    oineElekter1:     [3385.080, 3433.440],
-                    oineElekter2:     [3594.680, 3606.550]
-                }
-            },
-            // TÄITMATA: haldustasu ja remondifond on juunist üle kantud,
-            // kontrolli arvelt. Ülejäänud hinnad ja lõppnäidud tuleb sisestada.
-            '2026-07': {
-                invoiceNumber: '',
-                period: '07/2026',
-                invoiceDate: '2026-07-31',
-                dueDate: '2026-08-31',
-                lastMonthPaid: 0.00,
-                haldustasu: 0.3689,
-                remondifond: 0.2347,
-                uldelekter: 0,
-                elektrKrt9: 0,
-                kute: 0,
-                prugivedu: 0,
-                vesi: 2.6040,
-                veeSoojendamine: 0,
-                meters: {
-                    kulmVesi1:        [196.910, 196.910],
-                    kulmVesi2:        [200.900, 200.900],
-                    soeVesi1:         [141.120, 141.120],
-                    soeVesi2:         [39.700, 39.700],
-                    paevaneElekter1:  [3686.880, 3686.880],
-                    paevaneElekter2:  [4464.990, 4464.990],
-                    oineElekter1:     [3433.440, 3433.440],
-                    oineElekter2:     [3606.550, 3606.550]
-                }
-            }
-        };
+    <h3>Pinnap&otilde;hised hinnad (&euro;/m&sup2;)</h3>
+    <div class="rates-grid">
+        <div class="input-group"><label>Haldustasu:</label><input type="number" id="haldustasu" step="0.0001"></div>
+        <div class="input-group"><label>Remondifond:</label><input type="number" id="remondifond" step="0.0001"></div>
+        <div class="input-group"><label>Kindlustus:</label><input type="number" id="kindlustus" step="0.0001"></div>
+        <div class="input-group"><label>&Uuml;ldelekter:</label><input type="number" id="uldelekter" step="0.00001"></div>
+        <div class="input-group"><label>&Uuml;ldelekter (krt 9):</label><input type="number" id="uldelekterKrt9" step="0.00001"></div>
+        <div class="input-group"><label>K&uuml;te:</label><input type="number" id="kute" step="0.00001"></div>
+        <div class="input-group"><label>Pr&uuml;givedu:</label><input type="number" id="prugivedu" step="0.00001"></div>
+    </div>
+    <p class="optional-note">Kindlustus, &Uuml;ldelekter (krt 9) ja K&uuml;te: 0 = rida ei prindita.</p>
 
-        const RATE_FIELDS = ['haldustasu', 'remondifond', 'uldelekter', 'elektrKrt9',
-                             'kute', 'prugivedu', 'vesi', 'veeSoojendamine'];
+    <h3>Elekter (krt 9)</h3>
+    <div class="rates-grid">
+        <div class="input-group"><label>&euro;/m&sup2; (&uuml;ks rida):</label><input type="number" id="elektrKrt9" step="0.00001"></div>
+        <div class="input-group"><label>P&auml;evane &euro;/kWh:</label><input type="number" id="elektrPaevane" step="0.000001"></div>
+        <div class="input-group"><label>&Ouml;ine &euro;/kWh:</label><input type="number" id="elektrOine" step="0.000001"></div>
+    </div>
+    <p class="optional-note">Kas &uuml;ks &euro;/m&sup2; rida V&Otilde;I p&auml;evane+&ouml;ine &euro;/kWh (09/2025 stiil). Kummalgi juhul jaotatakse alamarvestite j&auml;rgi.</p>
 
-        function loadMonth(key) {
-            const m = MONTHS[key];
-            if (!m) return;
+    <h3>Vesi</h3>
+    <div class="rates-grid">
+        <div class="input-group"><label>Vesi &euro;/m&sup3;:</label><input type="number" id="vesi" step="0.0001"></div>
+        <div class="input-group"><label>Vee soojendamine &euro;/m&sup3;:</label><input type="number" id="veeSoojendamine" step="0.000001"></div>
+    </div>
 
-            document.getElementById('invoiceNumber').value = m.invoiceNumber;
-            document.getElementById('period').value = m.period;
-            document.getElementById('invoiceDate').value = m.invoiceDate;
-            document.getElementById('dueDate').value = m.dueDate;
-            document.getElementById('lastMonthPaid').value = m.lastMonthPaid;
+    <h3>Muu</h3>
+    <div class="input-group"><label>Arvestatud viivised:</label><input type="number" id="viivisedAmount" step="0.01"></div>
 
-            RATE_FIELDS.forEach(function (f) {
-                document.getElementById(f).value = m[f];
-            });
+    <h3>Arvestid</h3>
+    <div class="meters-grid">
+        <div class="meter-section"><h4>K&uuml;lm vesi 1 (K1)</h4>
+            <div class="input-group"><label>Algn:</label><input type="number" id="kulmVesi1Algn" step="0.001"></div>
+            <div class="input-group"><label>L&otilde;pp:</label><input type="number" id="kulmVesi1Lopp" step="0.001"></div></div>
+        <div class="meter-section"><h4>K&uuml;lm vesi 2 (K2)</h4>
+            <div class="input-group"><label>Algn:</label><input type="number" id="kulmVesi2Algn" step="0.001"></div>
+            <div class="input-group"><label>L&otilde;pp:</label><input type="number" id="kulmVesi2Lopp" step="0.001"></div></div>
+        <div class="meter-section"><h4>Soe vesi 1 (K1)</h4>
+            <div class="input-group"><label>Algn:</label><input type="number" id="soeVesi1Algn" step="0.001"></div>
+            <div class="input-group"><label>L&otilde;pp:</label><input type="number" id="soeVesi1Lopp" step="0.001"></div></div>
+        <div class="meter-section"><h4>Soe vesi 2 (K2)</h4>
+            <div class="input-group"><label>Algn:</label><input type="number" id="soeVesi2Algn" step="0.001"></div>
+            <div class="input-group"><label>L&otilde;pp:</label><input type="number" id="soeVesi2Lopp" step="0.001"></div></div>
+        <div class="meter-section"><h4>P&auml;ev elekter 1 (K1)</h4>
+            <div class="input-group"><label>Algn:</label><input type="number" id="paevaneElekter1Algn" step="0.001"></div>
+            <div class="input-group"><label>L&otilde;pp:</label><input type="number" id="paevaneElekter1Lopp" step="0.001"></div></div>
+        <div class="meter-section"><h4>P&auml;ev elekter 2 (K2)</h4>
+            <div class="input-group"><label>Algn:</label><input type="number" id="paevaneElekter2Algn" step="0.001"></div>
+            <div class="input-group"><label>L&otilde;pp:</label><input type="number" id="paevaneElekter2Lopp" step="0.001"></div></div>
+        <div class="meter-section"><h4>&Ouml;&ouml; elekter 1 (K1)</h4>
+            <div class="input-group"><label>Algn:</label><input type="number" id="oineElekter1Algn" step="0.001"></div>
+            <div class="input-group"><label>L&otilde;pp:</label><input type="number" id="oineElekter1Lopp" step="0.001"></div></div>
+        <div class="meter-section"><h4>&Ouml;&ouml; elekter 2 (K2)</h4>
+            <div class="input-group"><label>Algn:</label><input type="number" id="oineElekter2Algn" step="0.001"></div>
+            <div class="input-group"><label>L&otilde;pp:</label><input type="number" id="oineElekter2Lopp" step="0.001"></div></div>
+    </div>
 
-            Object.keys(m.meters).forEach(function (meter) {
-                document.getElementById(meter + 'Algn').value = m.meters[meter][0];
-                document.getElementById(meter + 'Lopp').value = m.meters[meter][1];
-            });
+    <button class="calculate-btn" onclick="generateInvoice()">Generate Split Invoice</button>
+    <button onclick="printInvoice()" style="margin-left: 10px; padding: 15px 30px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;">Print Invoice</button>
+    <button onclick="generateAll()" style="margin-left: 10px; padding: 15px 30px; background-color: #6f42c1; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;">K&otilde;ik kuud korraga</button>
+</div>
 
-            // Tühjenda eelmine arve, et vale kuu välja ei prindiks
-            document.getElementById('invoiceContainer').innerHTML = '';
-        }
+<div id="invoiceContainer"></div>
+</div>
 
-        window.addEventListener('DOMContentLoaded', function () {
-            loadMonth(document.getElementById('monthSelect').value);
-        });
+<script>
+const TOTAL_AREA = 79.90;
+const KORTER1_INDEX = 0.45557;
+const KORTER1_AREA = TOTAL_AREA * KORTER1_INDEX;
 
-        function getInputValue(id) {
-            return parseFloat(document.getElementById(id).value) || 0;
-        }
+// ---------------------------------------------------------------------------
+// Kuude andmed, otse KU arvetelt. Algnaidud = eelmise kuu loppnaidud.
+// Uue kuu lisamine: kopeeri viimane blokk, muuda numbrid, lisa <option>.
+// Vaartus 0 = rida ei prindita (kindlustus, uldelekterKrt9, kute).
+// ---------------------------------------------------------------------------
+const MONTHS = {
+ '2025-09': { invoiceNumber:'25109', period:'09/2025', invoiceDate:'2025-09-30', dueDate:'2025-10-31',
+   haldustasu:0.3242, remondifond:0.2068, kindlustus:0, uldelekter:0.03606, uldelekterKrt9:0.10951,
+   elektrKrt9:0, elektrPaevane:0.203806, elektrOine:0.118618,
+   kute:0.13684, prugivedu:0.08081, vesi:2.6040, veeSoojendamine:5.518993, viivisedAmount:0,
+   meters:{ kulmVesi1:[178.950,180.340], kulmVesi2:[179.980,182.560], soeVesi1:[126.870,128.280], soeVesi2:[24.380,25.980],
+            paevaneElekter1:[3146.780,3185.800], paevaneElekter2:[4031.320,4087.840],
+            oineElekter1:[2854.040,2903.070], oineElekter2:[3322.820,3352.690] } },
 
-        function formatNumber(num, decimals = 2) {
-            return num.toFixed(decimals);
-        }
+ '2025-10': { invoiceNumber:'25119', period:'10/2025', invoiceDate:'2025-10-31', dueDate:'2025-11-30',
+   haldustasu:0.3242, remondifond:0.2068, kindlustus:0, uldelekter:0.05563, uldelekterKrt9:0,
+   elektrKrt9:0.47559, elektrPaevane:0, elektrOine:0,
+   kute:0.68535, prugivedu:0.07940, vesi:2.6040, veeSoojendamine:5.283125, viivisedAmount:0.50,
+   meters:{ kulmVesi1:[180.340,182.150], kulmVesi2:[182.560,184.110], soeVesi1:[128.280,130.010], soeVesi2:[25.980,27.430],
+            paevaneElekter1:[3185.800,3228.700], paevaneElekter2:[4087.840,4136.920],
+            oineElekter1:[2903.070,2960.700], oineElekter2:[3352.690,3379.480] } },
 
-        // Round to cents. Korto rounds every line, then sums - so we do the same.
-        function r2(num) {
-            return Math.round(num * 100) / 100;
-        }
+ // 11/2025: K2 arvestid on arvel margitud PR (hinnangulised naidud 50.000 / 60.000 kWh).
+ '2025-11': { invoiceNumber:'25129', period:'11/2025', invoiceDate:'2025-11-30', dueDate:'2025-12-31',
+   haldustasu:0.3242, remondifond:0.2068, kindlustus:0.1461, uldelekter:0.05600, uldelekterKrt9:0,
+   elektrKrt9:0.55857, elektrPaevane:0, elektrOine:0,
+   kute:1.01587, prugivedu:0.07345, vesi:2.6040, veeSoojendamine:5.283125, viivisedAmount:0,
+   meters:{ kulmVesi1:[182.150,183.620], kulmVesi2:[184.110,187.990], soeVesi1:[130.010,131.440], soeVesi2:[27.430,29.520],
+            paevaneElekter1:[3228.700,3266.930], paevaneElekter2:[4136.920,4186.920],
+            oineElekter1:[2960.700,3010.030], oineElekter2:[3379.480,3439.480] } },
 
-        function numberToEstonianWords(num) {
-            const ones = ['', 'üks', 'kaks', 'kolm', 'neli', 'viis', 'kuus', 'seitse', 'kaheksa', 'üheksa'];
-            const teens = ['kümme', 'üksteist', 'kaksteist', 'kolmteist', 'neliteist', 'viisteist', 'kuusteist', 'seitseteist', 'kaheksateist', 'üheksateist'];
-            const tens = ['', 'kümme', 'kakskümmend', 'kolmkümmend', 'nelikümmend', 'viiskümmend', 'kuuskümmend', 'seitsekümmend', 'kaheksakümmend', 'üheksakümmend'];
-            const hundreds = ['', 'ükssada', 'kakssada', 'kolmsada', 'nelisada', 'viissada', 'kuussada', 'seitsesada', 'kaheksasada', 'üheksasada'];
+ '2025-12': { invoiceNumber:'26019', period:'12/2025', invoiceDate:'2025-12-31', dueDate:'2026-01-31',
+   haldustasu:0.3242, remondifond:0.2068, kindlustus:0, uldelekter:0.04988, uldelekterKrt9:0,
+   elektrKrt9:0.57935, elektrPaevane:0, elektrOine:0,
+   kute:1.27524, prugivedu:0.08081, vesi:2.6040, veeSoojendamine:5.369734, viivisedAmount:0,
+   meters:{ kulmVesi1:[183.620,185.950], kulmVesi2:[187.990,189.500], soeVesi1:[131.440,133.250], soeVesi2:[29.520,30.860],
+            paevaneElekter1:[3266.930,3361.310], paevaneElekter2:[4186.920,4246.280],
+            oineElekter1:[3010.030,3079.650], oineElekter2:[3439.480,3446.890] } },
 
-            const euros = Math.floor(num);
-            const cents = Math.round((num - euros) * 100);
+ '2026-01': { invoiceNumber:'26029', period:'01/2026', invoiceDate:'2026-01-31', dueDate:'2026-02-28',
+   haldustasu:0.3242, remondifond:0.2068, kindlustus:0, uldelekter:0.08196, uldelekterKrt9:0,
+   elektrKrt9:0.82416, elektrPaevane:0, elektrOine:0,
+   kute:2.14635, prugivedu:0.08160, vesi:2.6040, veeSoojendamine:5.611289, viivisedAmount:0,
+   meters:{ kulmVesi1:[185.950,188.400], kulmVesi2:[189.500,191.930], soeVesi1:[133.250,135.200], soeVesi2:[30.860,32.810],
+            paevaneElekter1:[3361.310,3425.530], paevaneElekter2:[4246.280,4290.340],
+            oineElekter1:[3079.650,3148.400], oineElekter2:[3446.890,3477.700] } },
 
-            let result = '';
+ '2026-02': { invoiceNumber:'26039', period:'02/2026', invoiceDate:'2026-02-28', dueDate:'2026-03-31',
+   haldustasu:0.3242, remondifond:0.2068, kindlustus:0, uldelekter:0.07408, uldelekterKrt9:0,
+   elektrKrt9:0.75357, elektrPaevane:0, elektrOine:0,
+   kute:1.99778, prugivedu:0.06766, vesi:2.6040, veeSoojendamine:5.611289, viivisedAmount:0,
+   meters:{ kulmVesi1:[188.400,190.660], kulmVesi2:[191.930,195.060], soeVesi1:[135.200,136.670], soeVesi2:[32.810,35.030],
+            paevaneElekter1:[3425.530,3484.130], paevaneElekter2:[4290.340,4336.500],
+            oineElekter1:[3148.400,3210.550], oineElekter2:[3477.700,3510.720] } },
 
-            if (euros === 0) {
-                result = 'null';
-            } else {
-                const h = Math.floor(euros / 100);
-                const t = Math.floor((euros % 100) / 10);
-                const o = euros % 10;
+ '2026-03': { invoiceNumber:'26049', period:'03/2026', invoiceDate:'2026-03-31', dueDate:'2026-04-30',
+   haldustasu:0.3242, remondifond:0.2068, kindlustus:0, uldelekter:0.04898, uldelekterKrt9:0,
+   elektrKrt9:0.39249, elektrPaevane:0, elektrOine:0,
+   kute:1.16673, prugivedu:0.08081, vesi:2.6040, veeSoojendamine:5.611289, viivisedAmount:0,
+   meters:{ kulmVesi1:[190.660,191.870], kulmVesi2:[195.060,196.550], soeVesi1:[136.670,137.620], soeVesi2:[35.030,36.660],
+            paevaneElekter1:[3484.130,3517.590], paevaneElekter2:[4336.500,4374.080],
+            oineElekter1:[3210.550,3256.740], oineElekter2:[3510.720,3541.350] } },
 
-                if (h > 0) result += hundreds[h] + ' ';
-                
-                if (t === 1) {
-                    result += teens[o] + ' ';
-                } else {
-                    if (t > 0) result += tens[t] + ' ';
-                    if (o > 0) result += ones[o] + ' ';
-                }
-            }
+ '2026-04': { invoiceNumber:'26059', period:'04/2026', invoiceDate:'2026-04-30', dueDate:'2026-05-31',
+   haldustasu:0.3242, remondifond:0.2068, kindlustus:0, uldelekter:0.04463, uldelekterKrt9:0,
+   elektrKrt9:0.45394, elektrPaevane:0, elektrOine:0,
+   kute:0.86020, prugivedu:0.08081, vesi:2.6040, veeSoojendamine:5.611289, viivisedAmount:0,
+   meters:{ kulmVesi1:[191.870,193.530], kulmVesi2:[196.550,198.070], soeVesi1:[137.620,139.080], soeVesi2:[36.660,38.070],
+            paevaneElekter1:[3517.590,3586.540], paevaneElekter2:[4374.080,4416.440],
+            oineElekter1:[3256.740,3321.500], oineElekter2:[3541.350,3564.970] } },
 
-            result = result.trim() + ' eurot ja ' + cents + ' senti';
-            return result;
-        }
+ '2026-05': { invoiceNumber:'26069', period:'05/2026', invoiceDate:'2026-05-31', dueDate:'2026-06-30',
+   haldustasu:0.3689, remondifond:0.2347, kindlustus:0, uldelekter:0.04161, uldelekterKrt9:0,
+   elektrKrt9:0.44255, elektrPaevane:0, elektrOine:0,
+   kute:0.20107, prugivedu:0.07345, vesi:2.6040, veeSoojendamine:5.611289, viivisedAmount:0,
+   meters:{ kulmVesi1:[193.530,195.340], kulmVesi2:[198.070,200.900], soeVesi1:[139.080,140.270], soeVesi2:[38.070,39.700],
+            paevaneElekter1:[3586.540,3631.580], paevaneElekter2:[4416.440,4453.660],
+            oineElekter1:[3321.500,3385.080], oineElekter2:[3564.970,3594.680] } },
 
-        function generateInvoice() {
-            console.log('Generating split invoice...');
-            
-            const invoiceNumber = document.getElementById('invoiceNumber').value;
-            const invoiceDate = document.getElementById('invoiceDate').value;
-            const dueDate = document.getElementById('dueDate').value;
-            const period = document.getElementById('period').value;
-            const lastMonthPaid = getInputValue('lastMonthPaid');
+ '2026-06': { invoiceNumber:'26079', period:'06/2026', invoiceDate:'2026-06-30', dueDate:'2026-07-31',
+   haldustasu:0.3689, remondifond:0.2347, kindlustus:0, uldelekter:0.02975, uldelekterKrt9:0,
+   elektrKrt9:0.36370, elektrPaevane:0, elektrOine:0,
+   kute:0, prugivedu:0.08081, vesi:2.6040, veeSoojendamine:11.727359, viivisedAmount:0,
+   meters:{ kulmVesi1:[195.340,196.910], kulmVesi2:[200.900,200.900], soeVesi1:[140.270,141.120], soeVesi2:[39.700,39.700],
+            paevaneElekter1:[3631.580,3686.880], paevaneElekter2:[4453.660,4464.990],
+            oineElekter1:[3385.080,3433.440], oineElekter2:[3594.680,3606.550] } }
+};
 
-            // Get rates
-            const haldustasu = getInputValue('haldustasu');
-            const remondifond = getInputValue('remondifond');
-            const uldelekter = getInputValue('uldelekter');
-            const elektrKrt9 = getInputValue('elektrKrt9');
-            const kute = getInputValue('kute');
-            const prugivedu = getInputValue('prugivedu');
-            const vesi = getInputValue('vesi');
-            const veeSoojendamine = getInputValue('veeSoojendamine');
+const FIELDS = ['invoiceNumber','period','invoiceDate','dueDate','haldustasu','remondifond','kindlustus',
+                'uldelekter','uldelekterKrt9','elektrKrt9','elektrPaevane','elektrOine',
+                'kute','prugivedu','vesi','veeSoojendamine','viivisedAmount'];
 
-            // Get viivised settings
-            const includeViivised = document.getElementById('includeViivised').checked;
-            const viivisedAmount = includeViivised ? getInputValue('viivisedAmount') : 0;
+function loadMonth(key) {
+    const m = MONTHS[key];
+    if (!m) return;
+    FIELDS.forEach(function (f) { document.getElementById(f).value = m[f]; });
+    Object.keys(m.meters).forEach(function (meter) {
+        document.getElementById(meter + 'Algn').value = m.meters[meter][0];
+        document.getElementById(meter + 'Lopp').value = m.meters[meter][1];
+    });
+    document.getElementById('invoiceContainer').innerHTML = '';
+}
 
-            console.log('Viivised settings:', { includeViivised, viivisedAmount });
+window.addEventListener('DOMContentLoaded', function () {
+    loadMonth(document.getElementById('monthSelect').value);
+});
 
-            // Calculate consumptions
-            const kulmVesi1 = getInputValue('kulmVesi1Lopp') - getInputValue('kulmVesi1Algn');
-            const kulmVesi2 = getInputValue('kulmVesi2Lopp') - getInputValue('kulmVesi2Algn');
-            const soeVesi1 = getInputValue('soeVesi1Lopp') - getInputValue('soeVesi1Algn');
-            const soeVesi2 = getInputValue('soeVesi2Lopp') - getInputValue('soeVesi2Algn');
-            const paevaneElekter1 = getInputValue('paevaneElekter1Lopp') - getInputValue('paevaneElekter1Algn');
-            const paevaneElekter2 = getInputValue('paevaneElekter2Lopp') - getInputValue('paevaneElekter2Algn');
-            const oineElekter1 = getInputValue('oineElekter1Lopp') - getInputValue('oineElekter1Algn');
-            const oineElekter2 = getInputValue('oineElekter2Lopp') - getInputValue('oineElekter2Algn');
+function getInputValue(id) { return parseFloat(document.getElementById(id).value) || 0; }
+function formatNumber(num, decimals = 2) { return num.toFixed(decimals); }
+function r2(num) { return Math.round(num * 100) / 100; }
 
-            // Total water consumption for each korter
-            const totalVesi1 = kulmVesi1 + soeVesi1;
-            const totalVesi2 = kulmVesi2 + soeVesi2;
+function numberToEstonianWords(num) {
+    const ones = ['', 'üks', 'kaks', 'kolm', 'neli', 'viis', 'kuus', 'seitse', 'kaheksa', 'üheksa'];
+    const teens = ['kümme', 'üksteist', 'kaksteist', 'kolmteist', 'neliteist', 'viisteist', 'kuusteist', 'seitseteist', 'kaheksateist', 'üheksateist'];
+    const tens = ['', 'kümme', 'kakskümmend', 'kolmkümmend', 'nelikümmend', 'viiskümmend', 'kuuskümmend', 'seitsekümmend', 'kaheksakümmend', 'üheksakümmend'];
+    const hundreds = ['', 'ükssada', 'kakssada', 'kolmsada', 'nelisada', 'viissada', 'kuussada', 'seitsesada', 'kaheksasada', 'üheksasada'];
+    const euros = Math.floor(num);
+    const cents = Math.round((num - euros) * 100);
+    let result = '';
+    if (euros === 0) { result = 'null'; }
+    else {
+        const h = Math.floor(euros / 100), t = Math.floor((euros % 100) / 10), o = euros % 10;
+        if (h > 0) result += hundreds[h] + ' ';
+        if (t === 1) { result += teens[o] + ' '; }
+        else { if (t > 0) result += tens[t] + ' '; if (o > 0) result += ones[o] + ' '; }
+    }
+    return result.trim() + ' eurot ja ' + cents + ' senti';
+}
 
-            // Total metered electricity per korter (day + night) - this flat's own use
-            const totalElekter1 = paevaneElekter1 + oineElekter1;
-            const totalElekter2 = paevaneElekter2 + oineElekter2;
-            const totalElekter = totalElekter1 + totalElekter2;
+// src = undefined -> loeb vormilt; src = MONTHS kirje -> ehitab otse andmetest
+function buildInvoice(src) {
+    const V = src ? (f => (typeof src[f] === 'number' ? src[f] : parseFloat(src[f]) || 0))
+                  : getInputValue;
+    const S = src ? (f => src[f]) : (f => document.getElementById(f).value);
+    const MTR = src ? ((m, i) => src.meters[m][i])
+                    : ((m, i) => getInputValue(m + (i ? 'Lopp' : 'Algn')));
 
-            console.log('Consumptions:', {
-                kulmVesi1, kulmVesi2, 
-                soeVesi1, soeVesi2,
-                paevaneElekter1, paevaneElekter2,
-                oineElekter1, oineElekter2
-            });
+    const invoiceNumber = S('invoiceNumber');
+    const invoiceDate = S('invoiceDate');
+    const dueDate = S('dueDate');
+    const period = S('period');
 
-            // Whole-apartment line totals, rounded exactly as Korto rounds them
-            const t_haldustasu = r2(TOTAL_AREA * haldustasu);
-            const t_remondifond = r2(TOTAL_AREA * remondifond);
-            const t_uldelekter = r2(TOTAL_AREA * uldelekter);
-            const t_elektrKrt9 = r2(TOTAL_AREA * elektrKrt9);
-            const t_kute = r2(TOTAL_AREA * kute);
-            const t_prugivedu = r2(TOTAL_AREA * prugivedu);
-            const t_vesi = r2((totalVesi1 + totalVesi2) * vesi);
-            const t_veeSoojendamine = r2((soeVesi1 + soeVesi2) * veeSoojendamine);
+    const haldustasu = V('haldustasu');
+    const remondifond = V('remondifond');
+    const kindlustus = V('kindlustus');
+    const uldelekter = V('uldelekter');
+    const uldelekterKrt9 = V('uldelekterKrt9');
+    const elektrKrt9 = V('elektrKrt9');
+    const elektrPaevane = V('elektrPaevane');
+    const elektrOine = V('elektrOine');
+    const kute = V('kute');
+    const prugivedu = V('prugivedu');
+    const vesi = V('vesi');
+    const veeSoojendamine = V('veeSoojendamine');
+    const viivisedAmount = V('viivisedAmount');
 
-            // Korter 1 share, rounded to cents.
-            // Building costs -> by area. Metered costs -> by meter.
-            const k1_haldustasu = r2(KORTER1_AREA * haldustasu);
-            const k1_remondifond = r2(KORTER1_AREA * remondifond);
-            const k1_uldelekter = r2(KORTER1_AREA * uldelekter);
-            const k1_kute = r2(KORTER1_AREA * kute);
-            const k1_prugivedu = r2(KORTER1_AREA * prugivedu);
-            const k1_vesi = r2(totalVesi1 * vesi);
-            const k1_veeSoojendamine = r2(soeVesi1 * veeSoojendamine);
+    const kulmVesi1 = r2(MTR('kulmVesi1', 1) - MTR('kulmVesi1', 0));
+    const kulmVesi2 = r2(MTR('kulmVesi2', 1) - MTR('kulmVesi2', 0));
+    const soeVesi1 = r2(MTR('soeVesi1', 1) - MTR('soeVesi1', 0));
+    const soeVesi2 = r2(MTR('soeVesi2', 1) - MTR('soeVesi2', 0));
+    const paevaneElekter1 = r2(MTR('paevaneElekter1', 1) - MTR('paevaneElekter1', 0));
+    const paevaneElekter2 = r2(MTR('paevaneElekter2', 1) - MTR('paevaneElekter2', 0));
+    const oineElekter1 = r2(MTR('oineElekter1', 1) - MTR('oineElekter1', 0));
+    const oineElekter2 = r2(MTR('oineElekter2', 1) - MTR('oineElekter2', 0));
 
-            // Elekter (krt 9) is this flat's own consumption -> split by the two
-            // sub-meters, not by area. Falls back to area if both meters read zero.
-            const k1_elektrKrt9 = totalElekter > 0
-                ? r2(t_elektrKrt9 * totalElekter1 / totalElekter)
-                : r2(KORTER1_AREA * elektrKrt9);
+    const totalVesi1 = kulmVesi1 + soeVesi1;
+    const totalVesi2 = kulmVesi2 + soeVesi2;
+    const paevaneTotal = paevaneElekter1 + paevaneElekter2;
+    const oineTotal = oineElekter1 + oineElekter2;
+    const totalElekter1 = paevaneElekter1 + oineElekter1;
+    const totalElekter2 = paevaneElekter2 + oineElekter2;
+    const totalElekter = totalElekter1 + totalElekter2;
 
-            // Korter 2 = line total minus Korter 1, so each line always adds up
-            // and the rounding residual lands on Korter 2 (the larger share)
-            const k2_haldustasu = r2(t_haldustasu - k1_haldustasu);
-            const k2_remondifond = r2(t_remondifond - k1_remondifond);
-            const k2_uldelekter = r2(t_uldelekter - k1_uldelekter);
-            const k2_elektrKrt9 = r2(t_elektrKrt9 - k1_elektrKrt9);
-            const k2_kute = r2(t_kute - k1_kute);
-            const k2_prugivedu = r2(t_prugivedu - k1_prugivedu);
-            const k2_vesi = r2(t_vesi - k1_vesi);
-            const k2_veeSoojendamine = r2(t_veeSoojendamine - k1_veeSoojendamine);
+    // Kogu korteri rea summad, umardatud nagu Korto umardab
+    const t_haldustasu = r2(TOTAL_AREA * haldustasu);
+    const t_remondifond = r2(TOTAL_AREA * remondifond);
+    const t_kindlustus = r2(TOTAL_AREA * kindlustus);
+    const t_uldelekter = r2(TOTAL_AREA * uldelekter);
+    const t_uldelekterKrt9 = r2(TOTAL_AREA * uldelekterKrt9);
+    const t_elektrKrt9 = r2(TOTAL_AREA * elektrKrt9);
+    const t_elektrPaevane = r2(paevaneTotal * elektrPaevane);
+    const t_elektrOine = r2(oineTotal * elektrOine);
+    const t_kute = r2(TOTAL_AREA * kute);
+    const t_prugivedu = r2(TOTAL_AREA * prugivedu);
+    const t_vesi = r2((totalVesi1 + totalVesi2) * vesi);
+    const t_veeSoojendamine = r2((soeVesi1 + soeVesi2) * veeSoojendamine);
 
-            // Calculate totals
-            const total1 = r2(k1_haldustasu + k1_remondifond + k1_uldelekter + k1_elektrKrt9 + k1_kute + k1_prugivedu + k1_vesi + k1_veeSoojendamine);
-            const total2 = r2(k2_haldustasu + k2_remondifond + k2_uldelekter + k2_elektrKrt9 + k2_kute + k2_prugivedu + k2_vesi + k2_veeSoojendamine);
-            const grandTotal = r2(total1 + total2);
+    // Korter 1: majaga seotud kulud pinna jargi, mooedetud kulud arvestite jargi
+    const k1_haldustasu = r2(KORTER1_AREA * haldustasu);
+    const k1_remondifond = r2(KORTER1_AREA * remondifond);
+    const k1_kindlustus = r2(KORTER1_AREA * kindlustus);
+    const k1_uldelekter = r2(KORTER1_AREA * uldelekter);
+    const k1_uldelekterKrt9 = r2(KORTER1_AREA * uldelekterKrt9);
+    const k1_kute = r2(KORTER1_AREA * kute);
+    const k1_prugivedu = r2(KORTER1_AREA * prugivedu);
+    const k1_vesi = r2(totalVesi1 * vesi);
+    const k1_veeSoojendamine = r2(soeVesi1 * veeSoojendamine);
 
-            console.log('Totals:', { total1, total2, grandTotal });
+    // Elekter (krt 9) on korteri enda tarbimine -> alamarvestite jargi, mitte pinna jargi
+    const k1_elektrKrt9 = totalElekter > 0 ? r2(t_elektrKrt9 * totalElekter1 / totalElekter)
+                                           : r2(KORTER1_AREA * elektrKrt9);
+    const k1_elektrPaevane = paevaneTotal > 0 ? r2(t_elektrPaevane * paevaneElekter1 / paevaneTotal) : 0;
+    const k1_elektrOine = oineTotal > 0 ? r2(t_elektrOine * oineElekter1 / oineTotal) : 0;
 
-            const summaWords = numberToEstonianWords(grandTotal + viivisedAmount);
+    // Korter 2 = rea summa miinus Korter 1, nii et iga rida klapib
+    const k2_haldustasu = r2(t_haldustasu - k1_haldustasu);
+    const k2_remondifond = r2(t_remondifond - k1_remondifond);
+    const k2_kindlustus = r2(t_kindlustus - k1_kindlustus);
+    const k2_uldelekter = r2(t_uldelekter - k1_uldelekter);
+    const k2_uldelekterKrt9 = r2(t_uldelekterKrt9 - k1_uldelekterKrt9);
+    const k2_elektrKrt9 = r2(t_elektrKrt9 - k1_elektrKrt9);
+    const k2_elektrPaevane = r2(t_elektrPaevane - k1_elektrPaevane);
+    const k2_elektrOine = r2(t_elektrOine - k1_elektrOine);
+    const k2_kute = r2(t_kute - k1_kute);
+    const k2_prugivedu = r2(t_prugivedu - k1_prugivedu);
+    const k2_vesi = r2(t_vesi - k1_vesi);
+    const k2_veeSoojendamine = r2(t_veeSoojendamine - k1_veeSoojendamine);
 
-            const invoice = `
-                <div class="invoice">
-                    <div class="invoice-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div class="sender-info">
-                            <h3>MAJAKA TN 54 KÜ</h3>
-                            <p>Majaka tn 54</p>
-                            <p>11412 Tallinn</p>
-                            <p>Reg. nr 80541496</p>
-                        </div>
-                        <div class="recipient-info" style="text-align: right;">
-                            <h4>MARIA TALVIK</h4>
-                            <p>Majaka tn 54-9</p>
-                            <p>11412 Tallinn</p>
-                        </div>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 20px;">
-                        <div></div>
-                        <div style="text-align: right;">
-                            <div class="detail-box" style="margin-bottom: 6px;">
-                                <p><strong>ARVE nr</strong> ${invoiceNumber}</p>
-                                <p><strong>Kuupäev</strong> ${invoiceDate.split('-').reverse().join('.')}</p>
-                                <p><strong>Maksetähtaeg</strong> ${dueDate.split('-').reverse().join('.')}</p>
-                                <p><strong>Viivis</strong> 0.022% päevas</p>
-                                <p><strong>Viitenumber</strong> 97</p>
-                                <p><strong>SWEDBANK</strong> EE772200221071147195</p>
-                            </div>
-                            <div class="detail-box">
-                                <p><strong>Korter</strong> Majaka tn 54-9</p>
-                                <p><strong>Pind</strong> ${formatNumber(TOTAL_AREA)} m²</p>
-                                <p><strong>Köetav pind</strong> ${formatNumber(TOTAL_AREA)} m²</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <table class="invoice-table">
-                        <thead>
-                            <tr>
-                                <th>Kululiik</th>
-                                <th>Periood</th>
-                                <th>Kogus</th>
-                                <th>Ühik</th>
-                                <th>Hind</th>
-                                <th>Summa</th>
-                                <th>Korter 1</th>
-                                <th>Korter 2</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Haldustasu</td>
-                                <td>${period}</td>
-                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
-                                <td>m²</td>
-                                <td>${formatNumber(haldustasu, 4)}</td>
-                                <td class="amount">${formatNumber(t_haldustasu)}</td>
-                                <td class="amount">${formatNumber(k1_haldustasu)}</td>
-                                <td class="amount">${formatNumber(k2_haldustasu)}</td>
-                            </tr>
-                            <tr>
-                                <td>Remondifond</td>
-                                <td>${period}</td>
-                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
-                                <td>m²</td>
-                                <td>${formatNumber(remondifond, 4)}</td>
-                                <td class="amount">${formatNumber(t_remondifond)}</td>
-                                <td class="amount">${formatNumber(k1_remondifond)}</td>
-                                <td class="amount">${formatNumber(k2_remondifond)}</td>
-                            </tr>
-                            <tr>
-                                <td>Üldelekter</td>
-                                <td>${period}</td>
-                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
-                                <td>m²</td>
-                                <td>${formatNumber(uldelekter, 5)}</td>
-                                <td class="amount">${formatNumber(t_uldelekter)}</td>
-                                <td class="amount">${formatNumber(k1_uldelekter)}</td>
-                                <td class="amount">${formatNumber(k2_uldelekter)}</td>
-                            </tr>
-                            <tr>
-                                <td>Elekter (krt 9)</td>
-                                <td>${period}</td>
-                                <td>${formatNumber(totalElekter, 2)}</td>
-                                <td>kWh</td>
-                                <td>${totalElekter > 0 ? formatNumber(t_elektrKrt9 / totalElekter, 5) : formatNumber(elektrKrt9, 5)}</td>
-                                <td class="amount">${formatNumber(t_elektrKrt9)}</td>
-                                <td class="amount">${formatNumber(k1_elektrKrt9)}</td>
-                                <td class="amount">${formatNumber(k2_elektrKrt9)}</td>
-                            </tr>
-                            <tr>
-                                <td>Vesi</td>
-                                <td>${period}</td>
-                                <td>${formatNumber(totalVesi1 + totalVesi2, 2)}</td>
-                                <td>m³</td>
-                                <td>${formatNumber(vesi, 4)}</td>
-                                <td class="amount">${formatNumber(t_vesi)}</td>
-                                <td class="amount">${formatNumber(k1_vesi)}</td>
-                                <td class="amount">${formatNumber(k2_vesi)}</td>
-                            </tr>
-                            ${kute > 0 ? `<tr>
-                                <td>Küte</td>
-                                <td>${period}</td>
-                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
-                                <td>m²</td>
-                                <td>${formatNumber(kute, 5)}</td>
-                                <td class="amount">${formatNumber(t_kute)}</td>
-                                <td class="amount">${formatNumber(k1_kute)}</td>
-                                <td class="amount">${formatNumber(k2_kute)}</td>
-                            </tr>` : ''}
-                            <tr>
-                                <td>Vee soojendamine</td>
-                                <td>${period}</td>
-                                <td>${formatNumber(soeVesi1 + soeVesi2, 2)}</td>
-                                <td>m³</td>
-                                <td>${formatNumber(veeSoojendamine, 6)}</td>
-                                <td class="amount">${formatNumber(t_veeSoojendamine)}</td>
-                                <td class="amount">${formatNumber(k1_veeSoojendamine)}</td>
-                                <td class="amount">${formatNumber(k2_veeSoojendamine)}</td>
-                            </tr>
-                            <tr>
-                                <td>Prügivedu</td>
-                                <td>${period}</td>
-                                <td>${formatNumber(TOTAL_AREA, 1)}</td>
-                                <td>m²</td>
-                                <td>${formatNumber(prugivedu, 5)}</td>
-                                <td class="amount">${formatNumber(t_prugivedu)}</td>
-                                <td class="amount">${formatNumber(k1_prugivedu)}</td>
-                                <td class="amount">${formatNumber(k2_prugivedu)}</td>
-                            </tr>
-                            <tr class="total-row">
-                                <td><strong>Kokku (EUR)</strong></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="amount"><strong>${formatNumber(grandTotal)}</strong></td>
-                                <td class="amount"><strong>${formatNumber(total1)}</strong></td>
-                                <td class="amount"><strong>${formatNumber(total2)}</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <div class="invoice-summary">
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-                            <tr>
-                                <td style="padding: 5px; border: 1px solid #000;">Võlg (seisuga ${invoiceDate.split('-').reverse().join('.')})</td>
-                                <td style="padding: 5px; border: 1px solid #000; text-align: right;">0.00</td>
-                            </tr>
-                            ${includeViivised ? `<tr>
-                                <td style="padding: 5px; border: 1px solid #000;">Arvestatud viivised</td>
-                                <td style="padding: 5px; border: 1px solid #000; text-align: right;">${formatNumber(viivisedAmount)}</td>
-                            </tr>` : ''}
-                            <tr style="background-color: #f0f0f0;">
-                                <td style="padding: 5px; border: 1px solid #000;"><strong>Tasumisele kuulub (EUR)</strong></td>
-                                <td style="padding: 5px; border: 1px solid #000; text-align: right;"><strong>${formatNumber(grandTotal + viivisedAmount)}</strong></td>
-                            </tr>
-                        </table>
-                        <div class="summary-text">
-                            <p><strong>Summa sõnadega:</strong> ${summaWords}</p>
-                            <p><strong>Eelmisel kuul laekunud summa:</strong> ${formatNumber(lastMonthPaid)}</p>
-                            <p class="note">Tasumisele kuuluvale summale võib lisanduda viivis jooksva kuu eest 0.022% päevas.</p>
-                            <p class="important">Palume kindlasti märkida tasumisel viitenumber!</p>
-                        </div>
-                    </div>
-                    
-                    <div class="invoice-footer">
-                        <p>Kasutame www.korto.ee veebitarkvara</p>
-                    </div>
-                    
-                    <div class="consumption-table">
-                        <h4>TARBIMISTE ÜLEVAADE</h4>
-                        <table class="invoice-table">
-                            <thead>
-                                <tr>
-                                    <th>Arvesti</th>
-                                    <th>Algnäit</th>
-                                    <th>Lõppnäit</th>
-                                    <th>Kogus</th>
-                                    <th>Koef.</th>
-                                    <th>Korr. kogus</th>
-                                    <th>Ühik</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Majaka tn 54-9 Külm vesi (1)</td>
-                                    <td>${getInputValue('kulmVesi1Algn').toFixed(3)}</td>
-                                    <td>${getInputValue('kulmVesi1Lopp').toFixed(3)}</td>
-                                    <td>${formatNumber(kulmVesi1, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(kulmVesi1, 3)}</td>
-                                    <td>m³</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-9 Külm vesi (2)</td>
-                                    <td>${getInputValue('kulmVesi2Algn').toFixed(3)}</td>
-                                    <td>${getInputValue('kulmVesi2Lopp').toFixed(3)}</td>
-                                    <td>${formatNumber(kulmVesi2, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(kulmVesi2, 3)}</td>
-                                    <td>m³</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-9 Soe vesi (1)</td>
-                                    <td>${getInputValue('soeVesi1Algn').toFixed(3)}</td>
-                                    <td>${getInputValue('soeVesi1Lopp').toFixed(3)}</td>
-                                    <td>${formatNumber(soeVesi1, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(soeVesi1, 3)}</td>
-                                    <td>m³</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-9 Soe vesi (2)</td>
-                                    <td>${getInputValue('soeVesi2Algn').toFixed(3)}</td>
-                                    <td>${getInputValue('soeVesi2Lopp').toFixed(3)}</td>
-                                    <td>${formatNumber(soeVesi2, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(soeVesi2, 3)}</td>
-                                    <td>m³</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-9 Päevane elekter (1)</td>
-                                    <td>${getInputValue('paevaneElekter1Algn').toFixed(3)}</td>
-                                    <td>${getInputValue('paevaneElekter1Lopp').toFixed(3)}</td>
-                                    <td>${formatNumber(paevaneElekter1, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(paevaneElekter1, 3)}</td>
-                                    <td>kWh</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-9 Päevane elekter (2)</td>
-                                    <td>${getInputValue('paevaneElekter2Algn').toFixed(3)}</td>
-                                    <td>${getInputValue('paevaneElekter2Lopp').toFixed(3)}</td>
-                                    <td>${formatNumber(paevaneElekter2, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(paevaneElekter2, 3)}</td>
-                                    <td>kWh</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-9 Öine elekter (1)</td>
-                                    <td>${getInputValue('oineElekter1Algn').toFixed(3)}</td>
-                                    <td>${getInputValue('oineElekter1Lopp').toFixed(3)}</td>
-                                    <td>${formatNumber(oineElekter1, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(oineElekter1, 3)}</td>
-                                    <td>kWh</td>
-                                </tr>
-                                <tr>
-                                    <td>Majaka tn 54-9 Öine elekter (2)</td>
-                                    <td>${getInputValue('oineElekter2Algn').toFixed(3)}</td>
-                                    <td>${getInputValue('oineElekter2Lopp').toFixed(3)}</td>
-                                    <td>${formatNumber(oineElekter2, 3)}</td>
-                                    <td></td>
-                                    <td>${formatNumber(oineElekter2, 3)}</td>
-                                    <td>kWh</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    const total1 = r2(k1_haldustasu + k1_remondifond + k1_kindlustus + k1_uldelekter + k1_uldelekterKrt9
+                    + k1_elektrKrt9 + k1_elektrPaevane + k1_elektrOine + k1_kute + k1_prugivedu
+                    + k1_vesi + k1_veeSoojendamine);
+    const total2 = r2(k2_haldustasu + k2_remondifond + k2_kindlustus + k2_uldelekter + k2_uldelekterKrt9
+                    + k2_elektrKrt9 + k2_elektrPaevane + k2_elektrOine + k2_kute + k2_prugivedu
+                    + k2_vesi + k2_veeSoojendamine);
+    const grandTotal = r2(total1 + total2);
+
+    function row(label, qty, unit, price, priceDec, tot, a, b) {
+        return `<tr><td>${label}</td><td>${period}</td><td>${qty}</td><td>${unit}</td>` +
+               `<td>${formatNumber(price, priceDec)}</td>` +
+               `<td class="amount">${formatNumber(tot)}</td>` +
+               `<td class="amount">${formatNumber(a)}</td>` +
+               `<td class="amount">${formatNumber(b)}</td></tr>`;
+    }
+    const m2 = formatNumber(TOTAL_AREA, 1);
+
+    let rows = '';
+    rows += row('Haldustasu', m2, 'm²', haldustasu, 4, t_haldustasu, k1_haldustasu, k2_haldustasu);
+    if (kindlustus > 0) rows += row('Kindlustus', m2, 'm²', kindlustus, 4, t_kindlustus, k1_kindlustus, k2_kindlustus);
+    rows += row('Remondifond', m2, 'm²', remondifond, 4, t_remondifond, k1_remondifond, k2_remondifond);
+    rows += row('Üldelekter', m2, 'm²', uldelekter, 5, t_uldelekter, k1_uldelekter, k2_uldelekter);
+    if (uldelekterKrt9 > 0) rows += row('Üldelekter (krt 9)', m2, 'm²', uldelekterKrt9, 5, t_uldelekterKrt9, k1_uldelekterKrt9, k2_uldelekterKrt9);
+    if (elektrKrt9 > 0) rows += row('Elekter (krt 9)', formatNumber(totalElekter, 2), 'kWh',
+        totalElekter > 0 ? t_elektrKrt9 / totalElekter : elektrKrt9, 5, t_elektrKrt9, k1_elektrKrt9, k2_elektrKrt9);
+    if (elektrPaevane > 0) rows += row('Elekter (päevane)', formatNumber(paevaneTotal, 2), 'kWh', elektrPaevane, 6, t_elektrPaevane, k1_elektrPaevane, k2_elektrPaevane);
+    if (elektrOine > 0) rows += row('Elekter (öine)', formatNumber(oineTotal, 2), 'kWh', elektrOine, 6, t_elektrOine, k1_elektrOine, k2_elektrOine);
+    rows += row('Vesi', formatNumber(totalVesi1 + totalVesi2, 2), 'm³', vesi, 4, t_vesi, k1_vesi, k2_vesi);
+    if (kute > 0) rows += row('Küte', m2, 'm²', kute, 5, t_kute, k1_kute, k2_kute);
+    rows += row('Vee soojendamine', formatNumber(soeVesi1 + soeVesi2, 2), 'm³', veeSoojendamine, 6, t_veeSoojendamine, k1_veeSoojendamine, k2_veeSoojendamine);
+    rows += row('Prügivedu', m2, 'm²', prugivedu, 5, t_prugivedu, k1_prugivedu, k2_prugivedu);
+
+    const meterRows = [
+        ['Külm vesi (1)', 'kulmVesi1', kulmVesi1, 'm³'],
+        ['Külm vesi (2)', 'kulmVesi2', kulmVesi2, 'm³'],
+        ['Soe vesi (1)', 'soeVesi1', soeVesi1, 'm³'],
+        ['Soe vesi (2)', 'soeVesi2', soeVesi2, 'm³'],
+        ['Päevane elekter (1)', 'paevaneElekter1', paevaneElekter1, 'kWh'],
+        ['Päevane elekter (2)', 'paevaneElekter2', paevaneElekter2, 'kWh'],
+        ['Öine elekter (1)', 'oineElekter1', oineElekter1, 'kWh'],
+        ['Öine elekter (2)', 'oineElekter2', oineElekter2, 'kWh']
+    ].map(function (r) {
+        return `<tr><td>Majaka tn 54-9 ${r[0]}</td>` +
+               `<td>${MTR(r[1], 0).toFixed(3)}</td>` +
+               `<td>${MTR(r[1], 1).toFixed(3)}</td>` +
+               `<td>${formatNumber(r[2], 3)}</td><td></td>` +
+               `<td>${formatNumber(r[2], 3)}</td><td>${r[3]}</td></tr>`;
+    }).join('');
+
+    return `
+    <div class="invoice">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+            <div class="sender-info">
+                <h3>MAJAKA TN 54 KÜ</h3><p>Majaka tn 54</p><p>11412 Tallinn</p><p>Reg. nr 80541496</p>
+            </div>
+            <div class="recipient-info" style="text-align: right;">
+                <h4>MARIA TALVIK</h4><p>Majaka tn 54-9</p><p>11412 Tallinn</p>
+            </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 20px;">
+            <div></div>
+            <div style="text-align: right;">
+                <div class="detail-box">
+                    <p><strong>ARVE nr</strong> ${invoiceNumber}</p>
+                    <p><strong>Kuupäev</strong> ${invoiceDate.split('-').reverse().join('.')}</p>
+                    <p><strong>Maksetähtaeg</strong> ${dueDate.split('-').reverse().join('.')}</p>
+                    <p><strong>Viivis</strong> 0.022% päevas</p>
+                    <p><strong>Viitenumber</strong> 97</p>
+                    <p><strong>SWEDBANK</strong> EE772200221071147195</p>
                 </div>
-            `;
+                <div class="detail-box">
+                    <p><strong>Korter</strong> Majaka tn 54-9</p>
+                    <p><strong>Pind</strong> ${formatNumber(TOTAL_AREA)} m²</p>
+                    <p><strong>Köetav pind</strong> ${formatNumber(TOTAL_AREA)} m²</p>
+                </div>
+            </div>
+        </div>
+        <table class="invoice-table">
+            <thead><tr><th>Kululiik</th><th>Periood</th><th>Kogus</th><th>Ühik</th><th>Hind</th><th>Summa</th><th>Korter 1</th><th>Korter 2</th></tr></thead>
+            <tbody>
+                ${rows}
+                <tr class="total-row"><td><strong>Kokku (EUR)</strong></td><td></td><td></td><td></td><td></td>
+                    <td class="amount"><strong>${formatNumber(grandTotal)}</strong></td>
+                    <td class="amount"><strong>${formatNumber(total1)}</strong></td>
+                    <td class="amount"><strong>${formatNumber(total2)}</strong></td></tr>
+            </tbody>
+        </table>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            ${viivisedAmount > 0 ? `<tr>
+                <td style="padding: 5px; border: 1px solid #000;">Arvestatud viivised</td>
+                <td style="padding: 5px; border: 1px solid #000; text-align: right;">${formatNumber(viivisedAmount)}</td></tr>` : ''}
+            <tr style="background-color: #f0f0f0;">
+                <td style="padding: 5px; border: 1px solid #000;"><strong>Tasumisele kuulub (EUR)</strong></td>
+                <td style="padding: 5px; border: 1px solid #000; text-align: right;"><strong>${formatNumber(grandTotal + viivisedAmount)}</strong></td></tr>
+        </table>
+        <div class="summary-text">
+            <p><strong>Summa sõnadega:</strong> ${numberToEstonianWords(grandTotal + viivisedAmount)}</p>
+            <p class="note">Tasumisele kuuluvale summale võib lisanduda viivis jooksva kuu eest 0.022% päevas.</p>
+            <p class="important">Palume kindlasti märkida tasumisel viitenumber!</p>
+        </div>
+        <div class="invoice-footer"><p>Kasutame www.korto.ee veebitarkvara</p></div>
+        <div class="consumption-table">
+            <h4>TARBIMISTE ÜLEVAADE</h4>
+            <table class="invoice-table">
+                <thead><tr><th>Arvesti</th><th>Algnäit</th><th>Lõppnäit</th><th>Kogus</th><th>Koef.</th><th>Korr. kogus</th><th>Ühik</th></tr></thead>
+                <tbody>${meterRows}</tbody>
+            </table>
+        </div>
+    </div>`;
+}
 
-            document.getElementById('invoiceContainer').innerHTML = invoice;
-        }
+function generateInvoice() {
+    document.getElementById('invoiceContainer').innerHTML = buildInvoice();
+}
 
-        function printInvoice() {
-            const printWindow = window.open('', '_blank');
-            
-            const invoiceContainer = document.getElementById('invoiceContainer');
-            if (!invoiceContainer || !invoiceContainer.innerHTML.trim()) {
-                alert('Please generate an invoice first!');
-                return;
-            }
-            
-            const printHTML = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Invoice - Majaka tn 54</title>
-                    <style>
-                        @media print {
-                            @page {
-                                margin: 1cm;
-                                size: A4;
-                            }
-                        }
-                        
-                        body {
-                            font-family: Arial, sans-serif;
-                            margin: 0;
-                            padding: 20px;
-                            font-size: 12px;
-                            line-height: 1.4;
-                        }
-                        
-                        .invoice {
-                            max-width: 100%;
-                            margin: 0 auto;
-                        }
-                        
-                        .invoice-header {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: flex-start;
-                            margin-bottom: 30px;
-                        }
-                        
-                        .sender-info h3, .recipient-info h4 {
-                            margin: 0 0 10px 0;
-                            font-size: 16px;
-                        }
-                        
-                        .sender-info p, .recipient-info p {
-                            margin: 5px 0;
-                            font-size: 12px;
-                        }
-                        
-                        .invoice-table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            margin-bottom: 20px;
-                            font-size: 11px;
-                        }
-                        
-                        .invoice-table th, .invoice-table td {
-                            border: 1px solid #000;
-                            padding: 4px 6px;
-                            text-align: left;
-                        }
-                        
-                        .invoice-table th {
-                            background-color: #f0f0f0;
-                            font-weight: bold;
-                        }
-                        
-                        .amount {
-                            text-align: right;
-                        }
-                        
-                        .total-row {
-                            background-color: #f0f0f0;
-                            font-weight: bold;
-                        }
-                        
-                        .invoice-summary {
-                            margin-top: 30px;
-                        }
-                        
-                        .invoice-summary table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            margin-bottom: 20px;
-                        }
-                        
-                        .invoice-summary td {
-                            border: 1px solid #000;
-                            padding: 5px;
-                        }
-                        
-                        .summary-text {
-                            margin-top: 20px;
-                            font-size: 11px;
-                        }
-                        
-                        .summary-text p {
-                            margin: 5px 0;
-                        }
-                        
-                        .invoice-footer {
-                            margin-top: 30px;
-                            text-align: center;
-                            font-size: 10px;
-                            color: #666;
-                        }
-                        
-                        .consumption-table {
-                            margin-top: 30px;
-                            page-break-before: always;
-                        }
-                        
-                        .consumption-table h4 {
-                            margin: 0 0 15px 0;
-                            font-size: 14px;
-                        }
-                        
-                        @media print {
-                            .no-print {
-                                display: none;
-                            }
-                        }
-                    </style>
-                </head>
-                <body>
-                    ${invoiceContainer.innerHTML}
-                </body>
-                </html>
-            `;
-            
-            printWindow.document.write(printHTML);
-            printWindow.document.close();
-            
-            printWindow.onload = function() {
-                printWindow.print();
-                printWindow.close();
-            };
-        }
-    </script>
+function generateAll() {
+    document.getElementById('invoiceContainer').innerHTML =
+        Object.keys(MONTHS).map(k => buildInvoice(MONTHS[k])).join('');
+}
+
+function printInvoice() {
+    const c = document.getElementById('invoiceContainer');
+    if (!c || !c.innerHTML.trim()) { alert('Genereeri kõigepealt arve!'); return; }
+    const w = window.open('', '_blank');
+    w.document.write(`<!DOCTYPE html><html><head><title>Invoice - Majaka tn 54</title><style>
+        @media print { @page { margin: 1cm; size: A4; } }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; font-size: 12px; line-height: 1.4; }
+        .invoice { max-width: 100%; margin: 0 auto; }
+        .invoice + .invoice { page-break-before: always; }
+        .sender-info h3, .recipient-info h4 { margin: 0 0 10px 0; font-size: 16px; }
+        .sender-info p, .recipient-info p { margin: 5px 0; font-size: 12px; }
+        .detail-box { border: 1px solid #000; padding: 8px; margin-bottom: 8px; font-size: 11px; }
+        .detail-box p { margin: 0 0 2px 0; }
+        .invoice-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 11px; }
+        .invoice-table th, .invoice-table td { border: 1px solid #000; padding: 4px 6px; text-align: left; }
+        .invoice-table th { background-color: #f0f0f0; font-weight: bold; }
+        .amount { text-align: right; }
+        .total-row { background-color: #f0f0f0; font-weight: bold; }
+        .summary-text { margin-top: 20px; font-size: 11px; }
+        .summary-text p { margin: 5px 0; }
+        .invoice-footer { margin-top: 30px; text-align: center; font-size: 10px; color: #666; }
+        .consumption-table { margin-top: 30px; page-break-before: always; }
+        .consumption-table h4 { margin: 0 0 15px 0; font-size: 14px; }
+    </style></head><body>${c.innerHTML}</body></html>`);
+    w.document.close();
+    w.onload = function () { w.print(); w.close(); };
+}
+</script>
 </body>
 </html>
