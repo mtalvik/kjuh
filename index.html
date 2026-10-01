@@ -61,7 +61,8 @@ body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; 
             <option value="2026-04">04/2026 &mdash; arve 26059</option>
             <option value="2026-05">05/2026 &mdash; arve 26069</option>
             <option value="2026-06">06/2026 &mdash; arve 26079</option>
-            <option value="2026-07" selected>07/2026 &mdash; arve 26089</option>
+            <option value="2026-07">07/2026 &mdash; arve 26089</option>
+            <option value="2026-08" selected>08/2026 &mdash; arve 26099</option>
         </select>
         <span class="hint">Valik t&auml;idab k&otilde;ik v&auml;ljad. Uus kuu: lisa blokk <code>MONTHS</code>-i ja &uuml;ks <code>&lt;option&gt;</code>.</span>
     </div>
@@ -237,7 +238,15 @@ const MONTHS = {
    kute:0, prugivedu:0.12414, vesi:2.8644, veeSoojendamine:9.285952, viivisedAmount:0.41,
    meters:{ kulmVesi1:[196.910,198.140], kulmVesi2:[200.900,201.960], soeVesi1:[141.120,141.770], soeVesi2:[39.700,40.430],
             paevaneElekter1:[3686.880,3747.480], paevaneElekter2:[4464.990,4496.490],
-            oineElekter1:[3433.440,3475.980], oineElekter2:[3606.550,3630.010] } }
+            oineElekter1:[3433.440,3475.980], oineElekter2:[3606.550,3630.010] } },
+
+ '2026-08': { invoiceNumber:'26099', period:'08/2026', invoiceDate:'2026-08-31', dueDate:'2026-09-30',
+   haldustasu:0.3689, remondifond:0.2347, kindlustus:0, uldelekter:0.02836, uldelekterKrt9:0,
+   elektrKrt9:0.60463, elektrPaevane:0, elektrOine:0,
+   kute:0, prugivedu:0.12515, vesi:2.8644, veeSoojendamine:10.758543, viivisedAmount:0,
+   meters:{ kulmVesi1:[198.140,200.330], kulmVesi2:[201.960,206.870], soeVesi1:[141.770,143.540], soeVesi2:[40.430,42.910],
+            paevaneElekter1:[3747.480,3846.490], paevaneElekter2:[4496.490,4547.800],
+            oineElekter1:[3475.980,3564.040], oineElekter2:[3630.010,3665.560] } }
 };
 
 const FIELDS = ['invoiceNumber','period','invoiceDate','dueDate','haldustasu','remondifond','kindlustus',
